@@ -10,16 +10,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Three.js + Lucide Icons -->
+  <!-- Three.js + GSAP + ScrollTrigger + Lucide Icons -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root {
+      /* Warm Architectural Neutral Palette */
       --bg-main: #f7f4ef;          /* Warm Alabaster / Off-White */
       --bg-surface: #efeae2;       /* Soft Travertine / Sand */
-      --bg-card: #faf8f5;          /* Pure Warm Plaster */
-      --text-primary: #2d2722;     /* Deep Sculptural Taupe */
+      --bg-card: #faf8f5;          /* Warm Plaster */
+      --text-primary: #2d2722;     /* Deep Sculptural Charcoal-Taupe */
       --text-muted: #7d7266;       /* Warm Earth Muted */
       --accent-taupe: #a69584;     /* Refined Neutral Taupe Accent */
       --stone-border: rgba(45, 39, 34, 0.12);
@@ -72,7 +75,7 @@
     .top-bar-right a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
     .top-bar-right a:hover { color: var(--text-primary); }
 
-    /* Navigation */
+    /* Main Navigation */
     nav {
       position: fixed;
       top: 45px; left: 0; width: 100%;
@@ -171,7 +174,7 @@
     .page-view { display: none; min-height: 100vh; }
     .page-view.active { display: block; }
 
-    /* ================= HOME VIEW ================= */
+    /* ================= HERO SECTION ================= */
     .hero-section {
       height: 100vh;
       display: flex;
@@ -253,16 +256,16 @@
       backdrop-filter: blur(8px);
     }
 
-    /* 3D CAROUSEL PILLAR SECTION */
-    .carousel-section {
+    /* ================= WONDERLAND-STYLE SCROLL SHOWCASE ================= */
+    .wl-showcase-section {
       position: relative;
-      height: 320vh;
+      height: 450vh;
       background: var(--bg-surface);
       border-top: 1px solid var(--stone-border);
       border-bottom: 1px solid var(--stone-border);
     }
 
-    .carousel-sticky-wrapper {
+    .wl-sticky-container {
       position: sticky;
       top: 0;
       width: 100%;
@@ -270,41 +273,179 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      padding: 95px 60px 40px;
+      padding: 80px 60px 40px;
       overflow: hidden;
     }
 
-    .carousel-header {
-      text-align: center;
+    .wl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       z-index: 20;
-      pointer-events: none;
     }
 
-    #carousel-canvas {
+    .wl-indicator {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--accent-taupe);
+      letter-spacing: 2px;
+    }
+
+    .wl-stage-viewport {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 10;
-      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
     }
-    #carousel-canvas:active { cursor: grabbing; }
 
-    .carousel-footer {
+    .wl-card-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wl-slide {
+      position: absolute;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr;
+      align-items: center;
+      gap: 60px;
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      pointer-events: none;
+      transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+    }
+
+    .wl-slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .wl-slide.prev {
+      opacity: 0;
+      transform: translateY(-60px) scale(0.95);
+    }
+
+    .wl-visual-box {
+      width: 100%;
+      height: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--stone-border);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 24px 60px rgba(45, 39, 34, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wl-visual-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.8s var(--ease-smooth);
+    }
+
+    .wl-slide:hover .wl-visual-box img {
+      transform: scale(1.05);
+    }
+
+    .wl-info-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .wl-col-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-taupe);
+      font-weight: 600;
+    }
+
+    .wl-item-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 4.5vw, 64px);
+      line-height: 1.05;
+      color: var(--text-primary);
+    }
+
+    .wl-item-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 440px;
+      font-weight: 400;
+    }
+
+    .wl-item-specs {
+      font-size: 12px;
+      color: var(--text-primary);
+      border-top: 1px solid var(--stone-border);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+
+    .wl-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--text-primary);
+      color: var(--bg-main);
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      width: fit-content;
+      margin-top: 12px;
+      transition: all 0.3s;
+    }
+    .wl-cta-btn:hover { background: var(--accent-taupe); transform: translateY(-2px); }
+
+    .wl-footer {
       display: flex;
       justify-content: space-between;
-      width: 100%;
       align-items: center;
-      z-index: 20;
+      width: 100%;
+      border-top: 1px solid var(--stone-border);
+      padding-top: 18px;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-muted);
-      pointer-events: none;
-      border-top: 1px solid var(--stone-border);
-      padding-top: 16px;
+      z-index: 20;
+    }
+
+    .wl-progress-dots {
+      display: flex;
+      gap: 10px;
+    }
+    .wl-dot {
+      width: 32px;
+      height: 3px;
+      background: var(--stone-border);
+      border-radius: 2px;
+      transition: background 0.4s;
+    }
+    .wl-dot.active {
+      background: var(--text-primary);
     }
 
     /* Editorial & Curations */
@@ -445,11 +586,13 @@
     .footer-bottom { border-top: 1px solid var(--stone-border); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 1.5px; color: var(--text-muted); text-transform: uppercase; }
 
     @media (max-width: 1024px) {
-      .top-bar, nav, .hero-section, .carousel-sticky-wrapper, .home-editorial, .shop-view, .gallery-view, .atelier-view, footer { padding-left: 30px; padding-right: 30px; }
+      .top-bar, nav, .hero-section, .wl-sticky-container, .home-editorial, .shop-view, .gallery-view, .atelier-view, footer { padding-left: 30px; padding-right: 30px; }
       .curation-grid { grid-template-columns: 1fr; }
       .craft-banner, .atelier-layout { grid-template-columns: 1fr; gap: 40px; }
       .gallery-item.col-8, .gallery-item.col-4 { grid-column: span 12; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .wl-slide { grid-template-columns: 1fr; gap: 30px; }
+      .wl-visual-box { height: 360px; }
     }
     @media (max-width: 768px) {
       .top-bar { display: none; }
@@ -525,24 +668,108 @@
         </div>
       </section>
 
-      <!-- 3D CAROUSEL PILLAR SECTION: 4 PRODUCTS ROTATING AROUND CENTER POLE -->
-      <section class="carousel-section" id="carousel-section">
-        <div class="carousel-sticky-wrapper">
-          <div class="carousel-header">
-            <span class="section-eyebrow">The Dimensional Showcase</span>
-            <h2 class="section-title">360° Curated Sculptural Forms</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Scroll gently or drag to rotate artworks around the central pillar</p>
+      <!-- WONDERLAND-STYLE SCROLL TRANSITION SHOWCASE -->
+      <section class="wl-showcase-section" id="wl-showcase">
+        <div class="wl-sticky-container">
+          
+          <div class="wl-header">
+            <div>
+              <span class="section-eyebrow">Dimensional Portfolio</span>
+              <h2 style="font-family: var(--font-display); font-size: 32px; color: var(--text-primary);">Sculptural Studies in Motion</h2>
+            </div>
+            <div class="wl-indicator" id="wl-counter">01 / 04</div>
           </div>
 
-          <!-- 3D Canvas for the Rotating Pillar -->
-          <canvas id="carousel-canvas"></canvas>
+          <!-- Slide Container -->
+          <div class="wl-stage-viewport">
+            <div class="wl-card-wrapper">
+              
+              <!-- SLIDE 1: CONTOUR FLOW -->
+              <div class="wl-slide active" data-index="0">
+                <div class="wl-visual-box">
+                  <img src="cf.png" alt="Contour Flow" />
+                </div>
+                <div class="wl-info-content">
+                  <span class="wl-col-tag">FORM COLLECTION — 01</span>
+                  <h3 class="wl-item-title">Contour Flow</h3>
+                  <p class="wl-item-desc">Undulating topographic strata evoking continuous fluid landforms. Multi-tier dimensional elevations designed to catch natural grazing sunlight.</p>
+                  <div class="wl-item-specs">
+                    <strong>Finish:</strong> Ultra-Matte Mineral Plaster &nbsp;•&nbsp; <strong>Sizing:</strong> 600×900 / 1200×1800 mm
+                  </div>
+                  <a href="https://wa.me/919353417406?text=Hi%20Huevoke,%20I'm%20interested%20in%20acquiring%20Contour%20Flow." target="_blank" class="wl-cta-btn">
+                    Acquire Artwork <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                  </a>
+                </div>
+              </div>
 
-          <div class="carousel-footer">
-            <span>[ 01 ] Contour Flow</span>
-            <span>[ 02 ] Lotus Bloom</span>
-            <span>[ 03 ] Shiva Stillness</span>
-            <span>[ 04 ] Waves / Horizon</span>
+              <!-- SLIDE 2: LOTUS BLOOM -->
+              <div class="wl-slide" data-index="1">
+                <div class="wl-visual-box">
+                  <img src="lotus.png" alt="Lotus Bloom" />
+                </div>
+                <div class="wl-info-content">
+                  <span class="wl-col-tag">ELEMENTS COLLECTION — 02</span>
+                  <h3 class="wl-item-title">Lotus Bloom</h3>
+                  <p class="wl-item-desc">Deconstructed botanical petals arranged in pure concentric stillness. Organic terracotta and sand mineral pigments with subtle relief depth.</p>
+                  <div class="wl-item-specs">
+                    <strong>Finish:</strong> Ultra-Matte Mineral Plaster &nbsp;•&nbsp; <strong>Sizing:</strong> 800×800 / 1000×1000 mm
+                  </div>
+                  <a href="https://wa.me/919353417406?text=Hi%20Huevoke,%20I'm%20interested%20in%20acquiring%20Lotus%20Bloom." target="_blank" class="wl-cta-btn">
+                    Acquire Artwork <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SLIDE 3: SHIVA STILLNESS -->
+              <div class="wl-slide" data-index="2">
+                <div class="wl-visual-box">
+                  <img src="shiva.png" alt="Shiva Stillness" onerror="this.src='cf.png'" />
+                </div>
+                <div class="wl-info-content">
+                  <span class="wl-col-tag">INDIAN MINIMAL — 03</span>
+                  <h3 class="wl-item-title">Shiva — Stillness</h3>
+                  <p class="wl-item-desc">Sacred meditative silhouette sculpted into an arched architectural frame. Minimal continuous relief capturing transcendent quietude.</p>
+                  <div class="wl-item-specs">
+                    <strong>Finish:</strong> Ultra-Matte Mineral Plaster &nbsp;•&nbsp; <strong>Sizing:</strong> 800×1200 / 1000×1500 mm
+                  </div>
+                  <a href="https://wa.me/919353417406?text=Hi%20Huevoke,%20I'm%20interested%20in%20acquiring%20Shiva%20Stillness." target="_blank" class="wl-cta-btn">
+                    Acquire Artwork <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SLIDE 4: TIDAL LANDSCAPE -->
+              <div class="wl-slide" data-index="3">
+                <div class="wl-visual-box">
+                  <img src="waves.png" alt="Tidal Landscape" onerror="this.src='cf.png'" />
+                </div>
+                <div class="wl-info-content">
+                  <span class="wl-col-tag">FORM COLLECTION — 04</span>
+                  <h3 class="wl-item-title">Tidal Landscape</h3>
+                  <p class="wl-item-desc">Sweeping horizontal linear strata evoking oceanic tides and natural sedimentary horizons. Designed for wide sanctuary living spaces.</p>
+                  <div class="wl-item-specs">
+                    <strong>Finish:</strong> Ultra-Matte Mineral Plaster &nbsp;•&nbsp; <strong>Sizing:</strong> 1200×600 / 1800×900 mm
+                  </div>
+                  <a href="https://wa.me/919353417406?text=Hi%20Huevoke,%20I'm%20interested%20in%20acquiring%20Tidal%20Landscape." target="_blank" class="wl-cta-btn">
+                    Acquire Artwork <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+                  </a>
+                </div>
+              </div>
+
+            </div>
           </div>
+
+          <div class="wl-footer">
+            <span>Scroll down to navigate artworks</span>
+            <div class="wl-progress-dots">
+              <div class="wl-dot active"></div>
+              <div class="wl-dot"></div>
+              <div class="wl-dot"></div>
+              <div class="wl-dot"></div>
+            </div>
+            <span onclick="switchPage('shop')" style="cursor:pointer; font-weight:600;">View All 14 Artworks →</span>
+          </div>
+
         </div>
       </section>
 
@@ -921,7 +1148,49 @@
       lucide.createIcons();
     });
 
-    // ================= 1. HERO 3D DEPTH MAP SHADER =================
+    // ================= 2. WONDERLAND-STYLE SCROLL TRANSITION ENGINE =================
+    const slides = document.querySelectorAll('.wl-slide');
+    const dots = document.querySelectorAll('.wl-dot');
+    const counter = document.getElementById('wl-counter');
+    const totalSlides = slides.length;
+
+    window.addEventListener('scroll', () => {
+      const section = document.getElementById('wl-showcase');
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const totalScrollable = rect.height - window.innerHeight;
+
+      if (sectionTop <= 0 && -sectionTop <= totalScrollable) {
+        const progress = -sectionTop / totalScrollable;
+        const activeIndex = Math.min(totalSlides - 1, Math.floor(progress * totalSlides));
+
+        slides.forEach((slide, idx) => {
+          if (idx === activeIndex) {
+            slide.classList.add('active');
+            slide.classList.remove('prev');
+          } else if (idx < activeIndex) {
+            slide.classList.remove('active');
+            slide.classList.add('prev');
+          } else {
+            slide.classList.remove('active');
+            slide.classList.remove('prev');
+          }
+        });
+
+        dots.forEach((dot, idx) => {
+          if (idx === activeIndex) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+
+        if (counter) {
+          counter.textContent = `0${activeIndex + 1} / 0${totalSlides}`;
+        }
+      }
+    });
+
+    // ================= 3. HERO 3D DEPTH MAP SHADER =================
     const heroCanvas = document.getElementById('webgl-canvas');
     const heroScene = new THREE.Scene();
     const heroCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -978,150 +1247,17 @@
       hMouseY = -(e.clientY / window.innerHeight - 0.5) * 2.0;
     });
 
-    // ================= 2. 3D ROTATING PILLAR CAROUSEL (TRUE-COLOR, NO BURNING) =================
-    const carCanvas = document.getElementById('carousel-canvas');
-    const carScene = new THREE.Scene();
-    const carCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    carCamera.position.set(0, 0, 8.5);
-
-    const carRenderer = new THREE.WebGLRenderer({ canvas: carCanvas, antialias: true, alpha: true });
-    carRenderer.setSize(window.innerWidth, window.innerHeight);
-    carRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    carRenderer.outputEncoding = THREE.sRGBEncoding;
-
-    // Center Axis Pivot Group
-    const carouselPivot = new THREE.Group();
-    carScene.add(carouselPivot);
-
-    // Central Pillar
-    const poleGeo = new THREE.CylinderGeometry(0.025, 0.025, 6.5, 32);
-    const poleMat = new THREE.MeshBasicMaterial({ color: 0xd6cdc2 });
-    const centerPole = new THREE.Mesh(poleGeo, poleMat);
-    carouselPivot.add(centerPole);
-
-    // 4 Products Placed Around Center Pole
-    const productImages = ['cf.png', 'lotus.png', 'shiva.png', 'waves.png'];
-    const radius = 3.6;
-
-    productImages.forEach((imgUrl, i) => {
-      const angle = (i / productImages.length) * Math.PI * 2;
-      
-      texLoader.load(imgUrl, (texture) => {
-        texture.encoding = THREE.sRGBEncoding;
-        texture.generateMipmaps = false;
-        texture.minFilter = THREE.LinearFilter;
-
-        // Auto-detect image aspect ratio to avoid squishing/stretching
-        const imgAspect = texture.image.naturalWidth / texture.image.naturalHeight;
-        const targetHeight = 2.8;
-        const targetWidth = targetHeight * imgAspect;
-
-        const panelGeo = new THREE.BoxGeometry(targetWidth, targetHeight, 0.06);
-        
-        // Pure unburned true-color rendering
-        const faceMat = new THREE.MeshBasicMaterial({ 
-          map: texture, 
-          transparent: true 
-        });
-        const sideMat = new THREE.MeshBasicMaterial({ 
-          color: 0xeee7dc 
-        });
-        
-        const materials = [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat];
-        const panelMesh = new THREE.Mesh(panelGeo, materials);
-
-        panelMesh.position.x = Math.sin(angle) * radius;
-        panelMesh.position.z = Math.cos(angle) * radius;
-        panelMesh.rotation.y = angle;
-
-        carouselPivot.add(panelMesh);
-      }, undefined, () => {
-        // Fallback to cf.png if shiva.png/waves.png not uploaded
-        texLoader.load('cf.png', (fallback) => {
-          fallback.encoding = THREE.sRGBEncoding;
-          const panelGeo = new THREE.BoxGeometry(2.0, 2.8, 0.06);
-          const faceMat = new THREE.MeshBasicMaterial({ map: fallback, transparent: true });
-          const sideMat = new THREE.MeshBasicMaterial({ color: 0xeee7dc });
-          const panelMesh = new THREE.Mesh(panelGeo, [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat]);
-          panelMesh.position.x = Math.sin(angle) * radius;
-          panelMesh.position.z = Math.cos(angle) * radius;
-          panelMesh.rotation.y = angle;
-          carouselPivot.add(panelMesh);
-        });
-      });
-    });
-
-    // Slow, Damped Scroll Rotation Linkage
-    let targetRotationY = 0;
-    let isDragging = false;
-    let previousPointerX = 0;
-
-    window.addEventListener('scroll', () => {
-      const sec = document.getElementById('carousel-section');
-      if (!sec) return;
-      const rect = sec.getBoundingClientRect();
-      const secTop = rect.top;
-      const secHeight = rect.height - window.innerHeight;
-      
-      if (secTop <= 0 && -secTop <= secHeight) {
-        const progress = -secTop / secHeight;
-        targetRotationY = progress * Math.PI * 1.5;
-      }
-    });
-
-    // Mouse / Touch Drag Support
-    carCanvas.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      previousPointerX = e.clientX;
-    });
-    window.addEventListener('mouseup', () => { isDragging = false; });
-    window.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        const delta = e.clientX - previousPointerX;
-        targetRotationY += delta * 0.003;
-        previousPointerX = e.clientX;
-      }
-    });
-
-    carCanvas.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        isDragging = true;
-        previousPointerX = e.touches[0].clientX;
-      }
-    });
-    window.addEventListener('touchend', () => { isDragging = false; });
-    window.addEventListener('touchmove', (e) => {
-      if (isDragging && e.touches.length === 1) {
-        const delta = e.touches[0].clientX - previousPointerX;
-        targetRotationY += delta * 0.004;
-        previousPointerX = e.touches[0].clientX;
-      }
-    });
-
-    // ================= MAIN RENDER LOOP =================
     function mainAnimation() {
       requestAnimationFrame(mainAnimation);
-
-      // 1. Hero Shader Tilt
       heroUniforms.uMouse.value.x += (hMouseX - heroUniforms.uMouse.value.x) * 0.04;
       heroUniforms.uMouse.value.y += (hMouseY - heroUniforms.uMouse.value.y) * 0.04;
       heroRenderer.render(heroScene, heroCamera);
-
-      // 2. Carousel Smooth Inertia Rotation
-      carouselPivot.rotation.y += (targetRotationY - carouselPivot.rotation.y) * 0.045;
-      carouselPivot.position.y = Math.sin(Date.now() * 0.001) * 0.05;
-
-      carRenderer.render(carScene, carCamera);
     }
     mainAnimation();
 
     window.addEventListener('resize', () => {
       heroRenderer.setSize(window.innerWidth, window.innerHeight);
       updateHeroAspect();
-
-      carCamera.aspect = window.innerWidth / window.innerHeight;
-      carCamera.updateProjectionMatrix();
-      carRenderer.setSize(window.innerWidth, window.innerHeight);
     });
   </script>
 </body>
