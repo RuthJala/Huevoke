@@ -16,11 +16,10 @@
 
   <style>
     :root {
-      /* Warm Architectural Light & Neutral Palette */
       --bg-main: #f7f4ef;          /* Warm Alabaster / Off-White */
       --bg-surface: #efeae2;       /* Soft Travertine / Sand */
       --bg-card: #faf8f5;          /* Pure Warm Plaster */
-      --text-primary: #2d2722;     /* Deep Sculptural Taupe (High Contrast Text) */
+      --text-primary: #2d2722;     /* Deep Sculptural Taupe */
       --text-muted: #7d7266;       /* Warm Earth Muted */
       --accent-taupe: #a69584;     /* Refined Neutral Taupe Accent */
       --stone-border: rgba(45, 39, 34, 0.12);
@@ -257,7 +256,7 @@
     /* 3D CAROUSEL PILLAR SECTION */
     .carousel-section {
       position: relative;
-      height: 320vh; /* Smooth, extended scroll area for slow rotation */
+      height: 320vh;
       background: var(--bg-surface);
       border-top: 1px solid var(--stone-border);
       border-bottom: 1px solid var(--stone-border);
@@ -979,7 +978,7 @@
       hMouseY = -(e.clientY / window.innerHeight - 0.5) * 2.0;
     });
 
-    // ================= 2. 3D ROTATING PILLAR CAROUSEL (SOFT NATURAL LIGHTING) =================
+    // ================= 2. 3D ROTATING PILLAR CAROUSEL (TRUE-COLOR, NO BURNING) =================
     const carCanvas = document.getElementById('carousel-canvas');
     const carScene = new THREE.Scene();
     const carCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -988,64 +987,68 @@
     const carRenderer = new THREE.WebGLRenderer({ canvas: carCanvas, antialias: true, alpha: true });
     carRenderer.setSize(window.innerWidth, window.innerHeight);
     carRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Gallery-Grade Ambient Light (Prevents washout & overexposure)
-    carScene.add(new THREE.AmbientLight(0xffffff, 0.95));
-
-    const keyLight = new THREE.DirectionalLight(0xf5efe6, 0.65);
-    keyLight.position.set(4, 6, 5);
-    carScene.add(keyLight);
-
-    const fillLight = new THREE.DirectionalLight(0xe8e0d5, 0.35);
-    fillLight.position.set(-4, -2, 3);
-    carScene.add(fillLight);
+    carRenderer.outputEncoding = THREE.sRGBEncoding;
 
     // Center Axis Pivot Group
     const carouselPivot = new THREE.Group();
     carScene.add(carouselPivot);
 
-    // Central Architectural Pillar
-    const poleGeo = new THREE.CylinderGeometry(0.035, 0.035, 6, 32);
-    const poleMat = new THREE.MeshStandardMaterial({ color: 0xcdc4b8, metalness: 0.2, roughness: 0.8 });
+    // Central Pillar
+    const poleGeo = new THREE.CylinderGeometry(0.025, 0.025, 6.5, 32);
+    const poleMat = new THREE.MeshBasicMaterial({ color: 0xd6cdc2 });
     const centerPole = new THREE.Mesh(poleGeo, poleMat);
     carouselPivot.add(centerPole);
 
-    // 4 Curated Products Around Center Pole
+    // 4 Products Placed Around Center Pole
     const productImages = ['cf.png', 'lotus.png', 'shiva.png', 'waves.png'];
     const radius = 3.6;
 
     productImages.forEach((imgUrl, i) => {
       const angle = (i / productImages.length) * Math.PI * 2;
       
-      const texture = texLoader.load(imgUrl, undefined, undefined, () => {
-        texLoader.load('cf.png', (fallback) => { panelMesh.material[4].map = fallback; });
-      });
-      texture.generateMipmaps = false;
-      texture.minFilter = THREE.LinearFilter;
+      texLoader.load(imgUrl, (texture) => {
+        texture.encoding = THREE.sRGBEncoding;
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.LinearFilter;
 
-      const panelGeo = new THREE.BoxGeometry(2.2, 2.8, 0.08);
-      
-      // Face material with neutral 1.0 color multiplier (no over-brightening)
-      const faceMat = new THREE.MeshStandardMaterial({ 
-        map: texture, 
-        roughness: 0.85, 
-        metalness: 0.0,
-        transparent: true 
-      });
-      
-      const sideMat = new THREE.MeshStandardMaterial({ 
-        color: 0xeee7dc, 
-        roughness: 0.95 
-      });
-      
-      const materials = [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat];
-      const panelMesh = new THREE.Mesh(panelGeo, materials);
+        // Auto-detect image aspect ratio to avoid squishing/stretching
+        const imgAspect = texture.image.naturalWidth / texture.image.naturalHeight;
+        const targetHeight = 2.8;
+        const targetWidth = targetHeight * imgAspect;
 
-      panelMesh.position.x = Math.sin(angle) * radius;
-      panelMesh.position.z = Math.cos(angle) * radius;
-      panelMesh.rotation.y = angle;
+        const panelGeo = new THREE.BoxGeometry(targetWidth, targetHeight, 0.06);
+        
+        // Pure unburned true-color rendering
+        const faceMat = new THREE.MeshBasicMaterial({ 
+          map: texture, 
+          transparent: true 
+        });
+        const sideMat = new THREE.MeshBasicMaterial({ 
+          color: 0xeee7dc 
+        });
+        
+        const materials = [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat];
+        const panelMesh = new THREE.Mesh(panelGeo, materials);
 
-      carouselPivot.add(panelMesh);
+        panelMesh.position.x = Math.sin(angle) * radius;
+        panelMesh.position.z = Math.cos(angle) * radius;
+        panelMesh.rotation.y = angle;
+
+        carouselPivot.add(panelMesh);
+      }, undefined, () => {
+        // Fallback to cf.png if shiva.png/waves.png not uploaded
+        texLoader.load('cf.png', (fallback) => {
+          fallback.encoding = THREE.sRGBEncoding;
+          const panelGeo = new THREE.BoxGeometry(2.0, 2.8, 0.06);
+          const faceMat = new THREE.MeshBasicMaterial({ map: fallback, transparent: true });
+          const sideMat = new THREE.MeshBasicMaterial({ color: 0xeee7dc });
+          const panelMesh = new THREE.Mesh(panelGeo, [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat]);
+          panelMesh.position.x = Math.sin(angle) * radius;
+          panelMesh.position.z = Math.cos(angle) * radius;
+          panelMesh.rotation.y = angle;
+          carouselPivot.add(panelMesh);
+        });
+      });
     });
 
     // Slow, Damped Scroll Rotation Linkage
@@ -1062,7 +1065,6 @@
       
       if (secTop <= 0 && -secTop <= secHeight) {
         const progress = -secTop / secHeight;
-        // Slower 1.5x rotation across 320vh scroll length for calm luxury feel
         targetRotationY = progress * Math.PI * 1.5;
       }
     });
@@ -1076,7 +1078,7 @@
     window.addEventListener('mousemove', (e) => {
       if (isDragging) {
         const delta = e.clientX - previousPointerX;
-        targetRotationY += delta * 0.003; // Gentle drag speed
+        targetRotationY += delta * 0.003;
         previousPointerX = e.clientX;
       }
     });
@@ -1105,7 +1107,7 @@
       heroUniforms.uMouse.value.y += (hMouseY - heroUniforms.uMouse.value.y) * 0.04;
       heroRenderer.render(heroScene, heroCamera);
 
-      // 2. Carousel Smooth Inertia Rotation (Soft damping)
+      // 2. Carousel Smooth Inertia Rotation
       carouselPivot.rotation.y += (targetRotationY - carouselPivot.rotation.y) * 0.045;
       carouselPivot.position.y = Math.sin(Date.now() * 0.001) * 0.05;
 
