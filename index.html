@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huevoke | Contemporary 3D Wall Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: #0d0d0d; color: #e5e5e5; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; }
+    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; color: #fff; }
+    .inquire-btn { color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 4px; }
+    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .hero { height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 60px 40px; pointer-events: none; z-index: 10; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 70px); font-weight: 300; line-height: 1.1; margin-bottom: 15px; color: #fff; }
+    .hero-sub { font-size: 13px; color: #aaa; letter-spacing: 1px; max-width: 420px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Huevoke</div>
+    <a href="https://wa.me/919999999999" target="_blank" class="inquire-btn">Inquire Bespoke</a>
+  </nav>
 
+  <canvas id="webgl-canvas"></canvas>
+
+  <section class="hero">
+    <h1 class="hero-title">Architectural Depth.<br>Minimal Forms.</h1>
+    <p class="hero-sub">Contemporary sculpted wall surfaces designed to transform luxury spaces through light and shadow.</p>
+  </section>
+
+  <script>
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const textureLoader = new THREE.TextureLoader();
+    const originalTexture = textureLoader.load('art.jpg');
+    const depthTexture = textureLoader.load('art-depth.jpg');
+
+    const uniforms = {
+      uTexture: { value: originalTexture },
+      uDepthMap: { value: depthTexture },
+      uMouse: { value: new THREE.Vector2(0, 0) }
+    };
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
+      fragmentShader: `
+        uniform sampler2D uTexture;
+        uniform sampler2D uDepthMap;
+        uniform vec2 uMouse;
+        varying vec2 vUv;
+        void main() {
+          vec4 depth = texture2D(uDepthMap, vUv);
+          vec2 fake3d = vUv + (uMouse * depth.r * 0.03);
+          gl_FragColor = texture2D(uTexture, fake3d);
+        }
+      `,
+      uniforms: uniforms
+    });
+
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+    let targetX = 0, targetY = 0;
+    window.addEventListener('mousemove', (e) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2.0;
+      targetY = -(e.clientY / window.innerHeight - 0.5) * 2.0;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      uniforms.uMouse.value.x += (targetX - uniforms.uMouse.value.x) * 0.05;
+      uniforms.uMouse.value.y += (targetY - uniforms.uMouse.value.y) * 0.05;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
