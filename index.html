@@ -4,33 +4,115 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Huevoke | Contemporary 3D Wall Art</title>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- Three.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background-color: #0d0d0d; color: #e5e5e5; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; }
-    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; color: #fff; }
-    .inquire-btn { color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 4px; }
-    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-    .hero { height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 60px 40px; pointer-events: none; z-index: 10; }
-    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 70px); font-weight: 300; line-height: 1.1; margin-bottom: 15px; color: #fff; }
-    .hero-sub { font-size: 13px; color: #aaa; letter-spacing: 1px; max-width: 420px; line-height: 1.6; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    body { 
+      background-color: #0d0d0d; 
+      color: #e5e5e5; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      min-height: 100vh; 
+      overflow-x: hidden; 
+    }
+    
+    /* Navigation Bar */
+    nav { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      padding: 30px 45px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      z-index: 100; 
+      mix-blend-mode: difference;
+    }
+    .logo { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 28px; 
+      letter-spacing: 5px; 
+      text-transform: uppercase; 
+      font-weight: 300; 
+      color: #fff; 
+    }
+    .inquire-btn { 
+      color: #fff; 
+      text-decoration: none; 
+      font-size: 11px; 
+      letter-spacing: 2px; 
+      text-transform: uppercase; 
+      border-bottom: 1px solid rgba(255,255,255,0.4); 
+      padding-bottom: 4px; 
+      transition: border-color 0.3s;
+    }
+    .inquire-btn:hover {
+      border-color: #fff;
+    }
+    
+    /* Fullscreen 3D Canvas */
+    #webgl-canvas { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      z-index: 1; 
+    }
+    
+    /* Hero Content */
+    .hero { 
+      height: 100vh; 
+      width: 100%; 
+      position: relative; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: flex-end; 
+      padding: 60px 45px; 
+      pointer-events: none; 
+      z-index: 10; 
+    }
+    .hero-title { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: clamp(38px, 5.5vw, 75px); 
+      font-weight: 300; 
+      line-height: 1.05; 
+      margin-bottom: 15px; 
+      color: #fff; 
+    }
+    .hero-sub { 
+      font-size: 13px; 
+      color: #999; 
+      letter-spacing: 1px; 
+      max-width: 440px; 
+      line-height: 1.6; 
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <div class="logo">Huevoke</div>
-    <a href="https://wa.me/919999999999" target="_blank" class="inquire-btn">Inquire Bespoke</a>
+    <a href="https://wa.me/919999999999?text=Hi%20Huevoke,%20I'm%20interested%20in%20custom%20wall%20art." target="_blank" class="inquire-btn">Inquire Bespoke</a>
   </nav>
 
   <canvas id="webgl-canvas"></canvas>
 
   <section class="hero">
     <h1 class="hero-title">Architectural Depth.<br>Minimal Forms.</h1>
-    <p class="hero-sub">Contemporary sculpted wall surfaces designed to transform luxury spaces through light and shadow.</p>
+    <p class="hero-sub">Contemporary sculpted wall surfaces designed to transform luxury spaces through light and shadow interplay.</p>
   </section>
 
   <script>
@@ -41,8 +123,10 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const textureLoader = new THREE.TextureLoader();
-    const originalTexture = textureLoader.load('art.jpg');
-    const depthTexture = textureLoader.load('art-depth.jpg');
+
+    // PNG Files Loading
+    const originalTexture = textureLoader.load('art.png');
+    const depthTexture = textureLoader.load('art-depth.png');
 
     const uniforms = {
       uTexture: { value: originalTexture },
@@ -51,7 +135,13 @@
     };
 
     const material = new THREE.ShaderMaterial({
-      vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = vec4(position, 1.0);
+        }
+      `,
       fragmentShader: `
         uniform sampler2D uTexture;
         uniform sampler2D uDepthMap;
@@ -59,15 +149,18 @@
         varying vec2 vUv;
         void main() {
           vec4 depth = texture2D(uDepthMap, vUv);
-          vec2 fake3d = vUv + (uMouse * depth.r * 0.03);
+          // Interactive 3D Depth Offset
+          vec2 fake3d = vUv + (uMouse * depth.r * 0.035);
           gl_FragColor = texture2D(uTexture, fake3d);
         }
       `,
       uniforms: uniforms
     });
 
-    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(mesh);
 
+    // Mouse Tracking for Tilt
     let targetX = 0, targetY = 0;
     window.addEventListener('mousemove', (e) => {
       targetX = (e.clientX / window.innerWidth - 0.5) * 2.0;
@@ -76,6 +169,7 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      // Smooth Inertia Effect
       uniforms.uMouse.value.x += (targetX - uniforms.uMouse.value.x) * 0.05;
       uniforms.uMouse.value.y += (targetY - uniforms.uMouse.value.y) * 0.05;
       renderer.render(scene, camera);
