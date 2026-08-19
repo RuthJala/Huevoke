@@ -3,110 +3,221 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Huevoke — Contemporary 3D Wall Art</title>
+  <title>HUEVOKE — Sculpted Contemporary Reliefs & 3D Wall Art</title>
   
-  <!-- Premium Editorial Typography -->
+  <!-- Google Fonts: Luxury Editorial Serif & Geometric Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Three.js Library -->
+  <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root {
-      --bg-dark: #0d0c0b;
+      --bg-deep: #0c0b0a;
+      --bg-card: #151413;
+      --bg-surface: #1c1a18;
       --sand-light: #f5f2ed;
+      --sand-warm: #e6dfd5;
       --sand-muted: #9c958d;
-      --border-subtle: rgba(245, 242, 237, 0.15);
+      --stone-border: rgba(245, 242, 237, 0.12);
+      --stone-border-hover: rgba(245, 242, 237, 0.35);
+      --accent-clay: #c4a482;
       --font-display: 'Italiana', serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body { 
-      background-color: var(--bg-dark); 
-      color: var(--sand-light); 
-      font-family: var(--font-body); 
-      min-height: 100vh; 
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-deep);
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--sand-light);
+      font-family: var(--font-sans);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-    }
-    
-    /* Navigation Bar */
-    nav { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      padding: 36px 60px; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      z-index: 100;
+      line-height: 1.6;
     }
 
-    .logo { 
-      font-family: var(--font-display); 
-      font-size: 26px; 
-      letter-spacing: 6px; 
-      text-transform: uppercase; 
-      font-weight: 400; 
-      color: var(--sand-light);
-      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+    /* Custom Selection */
+    ::selection {
+      background: var(--accent-clay);
+      color: var(--bg-deep);
     }
 
-    .nav-actions {
+    /* Top Utility Bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 120;
+      padding: 12px 60px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 30px;
-    }
-
-    .nav-label {
+      background: rgba(12, 11, 10, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--stone-border);
       font-size: 11px;
-      letter-spacing: 2.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--sand-muted);
     }
 
-    .inquire-btn { 
-      color: var(--sand-light); 
-      text-decoration: none; 
-      font-size: 11px; 
-      letter-spacing: 2.5px; 
-      text-transform: uppercase; 
-      padding: 10px 22px;
-      border: 1px solid var(--border-subtle);
-      border-radius: 40px;
-      background: rgba(13, 12, 11, 0.35);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
-    .inquire-btn:hover {
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+    }
+
+    .top-bar-right a {
+      color: var(--sand-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .top-bar-right a:hover {
+      color: var(--sand-light);
+    }
+
+    /* Main Navigation */
+    nav {
+      position: fixed;
+      top: 45px;
+      left: 0;
+      width: 100%;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 110;
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    nav.scrolled {
+      background: rgba(12, 11, 10, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 18px 60px;
+      border-bottom: 1px solid var(--stone-border);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--sand-light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--sand-muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
       background: var(--sand-light);
-      color: var(--bg-dark);
+      transition: width 0.3s var(--ease-smooth);
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--sand-light);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-bespoke {
+      color: var(--sand-light);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 10px 24px;
+      border: 1px solid var(--stone-border);
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.4s var(--ease-smooth);
+    }
+
+    .btn-bespoke:hover {
+      background: var(--sand-light);
+      color: var(--bg-deep);
       border-color: var(--sand-light);
       transform: translateY(-2px);
     }
-    
-    /* 3D WebGL Canvas Layer */
-    #webgl-canvas { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      z-index: 1; 
+
+    /* Fullscreen 3D WebGL Canvas */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
     }
 
-    /* Ambient Shading to ensure crisp text contrast */
+    /* Ambient Viewport Overlay */
     .viewport-overlay {
       position: fixed;
       top: 0;
@@ -115,130 +226,1552 @@
       height: 100%;
       z-index: 2;
       pointer-events: none;
-      background: radial-gradient(circle at center, transparent 40%, rgba(13, 12, 11, 0.4) 100%),
-                  linear-gradient(to top, rgba(13, 12, 11, 0.85) 0%, rgba(13, 12, 11, 0.2) 25%, transparent 60%);
+      background: 
+        radial-gradient(circle at 70% 30%, transparent 20%, rgba(12, 11, 10, 0.5) 80%),
+        linear-gradient(to bottom, rgba(12, 11, 10, 0.7) 0%, transparent 25%, transparent 65%, rgba(12, 11, 10, 0.95) 100%);
     }
-    
-    /* Hero Section */
-    .hero { 
+
+    /* Views / Pages Wrapper */
+    .view-container {
       position: relative;
-      height: 100vh; 
-      width: 100%; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: flex-end; 
-      padding: 70px 60px; 
-      pointer-events: none; 
-      z-index: 10; 
+      z-index: 10;
     }
 
-    .hero-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      width: 100%;
+    .page-view {
+      display: none;
+      min-height: 100vh;
+      padding-top: 140px;
     }
 
-    .hero-title-group {
-      max-width: 680px;
-    }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--sand-muted);
-      margin-bottom: 16px;
+    .page-view.active {
       display: block;
     }
 
-    .hero-title { 
-      font-family: var(--font-display); 
-      font-size: clamp(42px, 5.5vw, 88px); 
-      font-weight: 400; 
-      line-height: 1.02; 
-      color: var(--sand-light); 
-      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    /* ================= HOME VIEW ================= */
+    .hero-section {
+      height: calc(100vh - 140px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 60px 70px 60px;
+      pointer-events: none;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      align-items: flex-end;
+      gap: 40px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-clay);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--accent-clay);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6.2vw, 92px);
+      font-weight: 400;
+      line-height: 0.98;
+      color: var(--sand-light);
+      text-shadow: 0 8px 40px rgba(0, 0, 0, 0.8);
       letter-spacing: 0.5px;
     }
 
-    .hero-meta {
-      max-width: 340px;
-      text-align: right;
+    .hero-tagline {
+      font-style: italic;
+      color: var(--sand-warm);
+      font-weight: 300;
+      font-size: 0.88em;
+      opacity: 0.9;
     }
 
-    .hero-sub { 
-      font-size: 13px; 
-      color: #ccc5b9; 
-      letter-spacing: 0.8px; 
-      line-height: 1.7; 
-      margin-bottom: 18px;
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 24px;
+      pointer-events: auto;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: #c7c0b5;
+      letter-spacing: 0.5px;
+      line-height: 1.8;
+      max-width: 380px;
+      font-weight: 300;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge-pill {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(245, 242, 237, 0.08);
+      border: 1px solid var(--stone-border);
+      color: var(--sand-warm);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Scroll Prompt Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sand-muted);
+      opacity: 0.7;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 30px;
+      background: linear-gradient(to bottom, var(--sand-muted), transparent);
+      animation: pulseScroll 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseScroll {
+      0%, 100% { transform: scaleY(0.4); opacity: 0.3; transform-origin: top; }
+      50% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+    }
+
+    /* Content Section on Home */
+    .home-editorial {
+      background: linear-gradient(to bottom, transparent, var(--bg-deep) 15%, var(--bg-deep) 100%);
+      padding: 120px 60px 100px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-header {
+      max-width: 800px;
+      margin-bottom: 70px;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-clay);
+      margin-bottom: 14px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--sand-light);
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--sand-muted);
+      margin-top: 18px;
+      line-height: 1.8;
+      max-width: 620px;
       font-weight: 300;
     }
 
-    .hero-specs {
+    /* Collection Showcase Highlights */
+    .curation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 50px;
+    }
+
+    .curation-card {
+      background: var(--bg-card);
+      border: 1px solid var(--stone-border);
+      border-radius: 12px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s var(--ease-smooth);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 380px;
+    }
+
+    .curation-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(196, 164, 130, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .curation-card:hover {
+      border-color: var(--stone-border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .curation-number {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--accent-clay);
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+
+    .curation-name {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--sand-light);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .curation-summary {
+      font-size: 13px;
+      color: var(--sand-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .curation-items-list {
+      list-style: none;
+      border-top: 1px solid var(--stone-border);
+      padding-top: 18px;
+      margin-bottom: 28px;
+    }
+
+    .curation-items-list li {
+      font-size: 12px;
+      color: #b5ada3;
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .curation-items-list li::before {
+      content: '—';
+      color: var(--accent-clay);
+      font-size: 10px;
+    }
+
+    .card-footer-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand-light);
+      font-weight: 600;
+    }
+
+    /* Material Quality Highlight Banner */
+    .craft-banner {
+      margin-top: 90px;
+      background: var(--bg-surface);
+      border: 1px solid var(--stone-border);
+      border-radius: 16px;
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .craft-title {
+      font-family: var(--font-display);
+      font-size: 38px;
+      color: var(--sand-light);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .craft-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .craft-spec-item {
+      border-left: 2px solid var(--accent-clay);
+      padding-left: 16px;
+    }
+
+    .craft-spec-name {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-clay);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .craft-spec-val {
+      font-size: 14px;
+      color: var(--sand-light);
+      font-weight: 400;
+    }
+
+    /* ================= PRODUCTS / SHOP VIEW ================= */
+    .shop-view {
+      padding: 140px 60px 100px;
+      background: var(--bg-deep);
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 60px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--stone-border);
+      padding-bottom: 20px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--sand-muted);
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      color: var(--sand-light);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .filter-btn.active {
+      background: var(--sand-light);
+      color: var(--bg-deep);
+      border-color: var(--sand-light);
+      font-weight: 600;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 36px;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--stone-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.4s var(--ease-smooth);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      border-color: var(--stone-border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .product-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      background: #181615;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-smooth);
+    }
+
+    .product-card:hover .product-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .product-badge-overlay {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      padding: 6px 12px;
+      background: rgba(12, 11, 10, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--stone-border);
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand-warm);
+    }
+
+    .product-details {
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      background: var(--bg-card);
+    }
+
+    .product-collection-tag {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-clay);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--sand-light);
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .product-specs {
+      font-size: 12px;
+      color: var(--sand-muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      border-top: 1px solid rgba(245, 242, 237, 0.06);
+      padding-top: 14px;
+    }
+
+    .product-specs span {
+      display: block;
+      color: #b0a99f;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px solid var(--stone-border);
+    }
+
+    .product-price-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-label {
+      font-size: 9px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--sand-muted);
     }
 
-    @media (max-width: 900px) {
-      nav { padding: 24px 30px; }
-      .hero { padding: 40px 30px; }
-      .hero-container { flex-direction: column; align-items: flex-start; gap: 24px; }
-      .hero-meta { text-align: left; max-width: 100%; }
-      .nav-label { display: none; }
+    .price-value {
+      font-size: 15px;
+      color: var(--sand-light);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-inquire-prod {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sand-light);
+      color: var(--bg-deep);
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+
+    .btn-inquire-prod:hover {
+      background: var(--accent-clay);
+      transform: translateY(-2px);
+    }
+
+    /* ================= GALLERY / ARCHITECTURE VIEW ================= */
+    .gallery-view {
+      padding: 140px 60px 100px;
+      background: var(--bg-deep);
+    }
+
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--stone-border);
+      background: #141312;
+      min-height: 420px;
+      transition: all 0.5s var(--ease-smooth);
+    }
+
+    .gallery-item:hover {
+      border-color: var(--stone-border-hover);
+      transform: translateY(-4px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-smooth);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-item.col-8 { grid-column: span 8; }
+    .gallery-item.col-4 { grid-column: span 4; }
+    .gallery-item.col-6 { grid-column: span 6; }
+    .gallery-item.col-12 { grid-column: span 12; height: 500px; }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12, 11, 10, 0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 34px;
+      pointer-events: none;
+    }
+
+    .gallery-overlay h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--sand-light);
+      margin-bottom: 6px;
+    }
+
+    .gallery-overlay p {
+      font-size: 12px;
+      color: var(--sand-muted);
+      letter-spacing: 1px;
+    }
+
+    /* ================= BESPOKE / ATELIER VIEW ================= */
+    .atelier-view {
+      padding: 140px 60px 100px;
+      background: var(--bg-deep);
+    }
+
+    .atelier-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 70px;
+      align-items: start;
+      margin-top: 50px;
+    }
+
+    .atelier-info {
+      background: var(--bg-card);
+      border: 1px solid var(--stone-border);
+      border-radius: 16px;
+      padding: 50px;
+    }
+
+    .process-timeline {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 20px;
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--accent-clay);
+      min-width: 32px;
+    }
+
+    .step-content h4 {
+      font-size: 15px;
+      color: var(--sand-light);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .step-content p {
+      font-size: 13px;
+      color: var(--sand-muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .inquiry-form-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--stone-border);
+      border-radius: 16px;
+      padding: 50px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand-muted);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(12, 11, 10, 0.8);
+      border: 1px solid var(--stone-border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: var(--sand-light);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--sand-light);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--sand-light);
+      color: var(--bg-deep);
+      border: none;
+      border-radius: 40px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s;
+    }
+
+    .form-submit-btn:hover {
+      background: var(--accent-clay);
+      transform: translateY(-2px);
+    }
+
+    /* Global Footer */
+    footer {
+      background: #080706;
+      border-top: 1px solid var(--stone-border);
+      padding: 90px 60px 40px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 50px;
+      margin-bottom: 70px;
+    }
+
+    .footer-brand .logo {
+      font-size: 32px;
+      margin-bottom: 18px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--sand-muted);
+      line-height: 1.8;
+      max-width: 320px;
+      font-weight: 300;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-clay);
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-links a {
+      color: var(--sand-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--sand-light);
+    }
+
+    .contact-item {
+      font-size: 13px;
+      color: var(--sand-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-item a {
+      color: var(--sand-light);
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(245, 242, 237, 0.08);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .top-bar, nav, .hero-section, .home-editorial, .shop-view, .gallery-view, .atelier-view, footer {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .curation-grid { grid-template-columns: 1fr; }
+      .craft-banner { grid-template-columns: 1fr; gap: 40px; padding: 40px; }
+      .atelier-layout { grid-template-columns: 1fr; }
+      .gallery-item.col-8, .gallery-item.col-4, .gallery-item.col-6 { grid-column: span 12; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar { display: none; }
+      nav { top: 0; padding: 20px 24px; }
+      .nav-links { display: none; } /* Mobile toggle simplification */
+      .hero-section { height: calc(100vh - 80px); padding: 0 24px 50px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .hero-right { align-items: flex-start; text-align: left; }
+      .hero-desc { text-align: left; }
+      .hero-badges { justify-content: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">Huevoke</div>
-    <div class="nav-actions">
-      <span class="nav-label">Series 01 — Tactile Planes</span>
-      <a href="https://wa.me/919999999999?text=Hi%20Huevoke,%20I'm%20interested%20in%20custom%20wall%20art." target="_blank" class="inquire-btn">Acquire Piece</a>
+  <!-- Top Utility Ribbon -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span><span class="status-dot"></span> Atelier Open for Bespoke Commissions</span>
+      <span>•</span>
+      <span>Handcrafted Ultra-Matte Reliefs</span>
+    </div>
+    <div class="top-bar-right">
+      <a href="https://instagram.com" target="_blank">IG: @HUEVOKE.DECOR</a>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="#" class="logo" onclick="switchPage('home')">HUEVOKE</a>
+    <ul class="nav-links">
+      <li><a class="nav-link active" onclick="switchPage('home')">Home</a></li>
+      <li><a class="nav-link" onclick="switchPage('shop')">Collections & Artworks</a></li>
+      <li><a class="nav-link" onclick="switchPage('gallery')">Architectural Gallery</a></li>
+      <li><a class="nav-link" onclick="switchPage('atelier')">Bespoke Atelier</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://wa.me/919353417406?text=Hi%20Huevoke,%20I'd%20like%20to%20commission%20a%20bespoke%203D%20wall%20art%20piece." target="_blank" class="btn-bespoke">
+        <i data-lucide="message-circle" style="width:14px;height:14px;"></i>
+        Direct Inquiry
+      </a>
     </div>
   </nav>
 
+  <!-- 3D Shader Background for Hero -->
   <canvas id="webgl-canvas"></canvas>
   <div class="viewport-overlay"></div>
 
-  <section class="hero">
-    <div class="hero-container">
-      <div class="hero-title-group">
-        <span class="hero-eyebrow">Sculptural Wall Architecture</span>
-        <h1 class="hero-title">Architectural Depth.<br>Minimal Forms.</h1>
+  <!-- View Content Container -->
+  <div class="view-container">
+
+    <!-- ================= PAGE 1: HOME ================= -->
+    <div id="page-home" class="page-view active">
+      
+      <!-- Hero -->
+      <section class="hero-section">
+        <div class="hero-grid">
+          <div class="hero-left">
+            <span class="hero-eyebrow">Contemporary Sculptural Wall Art</span>
+            <h1 class="hero-title">
+              Form Defined by Shadow.<br>
+              <span class="hero-tagline">Stillness Crafted in Relief.</span>
+            </h1>
+          </div>
+          <div class="hero-right">
+            <p class="hero-desc">
+              Architectural 3D surfaces meticulously sculpted for modern minimalist spaces. Where organic topography meets tactile silence.
+            </p>
+            <div class="hero-badges">
+              <span class="badge-pill">Ultra-Matte Mineral Finish</span>
+              <span class="badge-pill">Custom Architectural Sizing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-indicator">
+          <span>Explore Curations</span>
+          <div class="scroll-line"></div>
+        </div>
+      </section>
+
+      <!-- Editorial Section on Home -->
+      <section class="home-editorial">
+        <div class="section-header">
+          <span class="section-eyebrow">Three Distinct Curations</span>
+          <h2 class="section-title">Sculptural Explorations in Tactile Geometry</h2>
+          <p class="section-subtitle">
+            Every Huevoke piece is engineered with dimensional depth that transforms dynamically under shifting ambient light throughout the day.
+          </p>
+        </div>
+
+        <!-- 3 Collection Cards -->
+        <div class="curation-grid">
+          
+          <!-- Collection 1: FORM -->
+          <div class="curation-card" onclick="filterAndShowShop('form')">
+            <div>
+              <div class="curation-number">01</div>
+              <h3 class="curation-name">FORM</h3>
+              <p class="curation-summary">
+                Topographic reliefs inspired by geological strata, undulating liquid curves, and structural equilibrium.
+              </p>
+              <ul class="curation-items-list">
+                <li>Contour Flow</li>
+                <li>Erosion</li>
+                <li>Fluid Motion</li>
+                <li>Balance</li>
+                <li>Tidal Landscape</li>
+              </ul>
+            </div>
+            <div class="card-footer-action">
+              <span>View Collection</span>
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+
+          <!-- Collection 2: ELEMENTS -->
+          <div class="curation-card" onclick="filterAndShowShop('elements')">
+            <div>
+              <div class="curation-number">02</div>
+              <h3 class="curation-name">ELEMENTS</h3>
+              <p class="curation-summary">
+                Abstract minimalist interpretations of celestial transitions, atmospheric horizons, and organic botanicals.
+              </p>
+              <ul class="curation-items-list">
+                <li>Lotus Bloom</li>
+                <li>Eclipse</li>
+                <li>Moon Phases</li>
+                <li>Mountain & Mist</li>
+                <li>Sun / Horizon</li>
+              </ul>
+            </div>
+            <div class="card-footer-action">
+              <span>View Collection</span>
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+
+          <!-- Collection 3: INDIAN MINIMAL -->
+          <div class="curation-card" onclick="filterAndShowShop('indian-minimal')">
+            <div>
+              <div class="curation-number">03</div>
+              <h3 class="curation-name">INDIAN MINIMAL</h3>
+              <p class="curation-summary">
+                Sacred Vedic iconography deconstructed into pure architectural geometry, subtle curves, and serene presence.
+              </p>
+              <ul class="curation-items-list">
+                <li>Ganesha — The Curve</li>
+                <li>Shiva — Stillness</li>
+                <li>Nataraja — Cosmic Rhythm</li>
+                <li>Ram — The Mighty</li>
+              </ul>
+            </div>
+            <div class="card-footer-action">
+              <span>View Collection</span>
+              <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Craft Banner -->
+        <div class="craft-banner">
+          <div>
+            <span class="section-eyebrow">Material Mastery</span>
+            <h3 class="craft-title">Engineered for Subtle tactile Luxury</h3>
+            <p style="color: var(--sand-muted); font-size: 14px; line-height: 1.8; font-weight: 300;">
+              Constructed with high-density architectural gypsum composites coated in our proprietary non-reflective ultra-matte mineral sealant. Every shadow remains crisp, clean, and free of specular glare.
+            </p>
+          </div>
+          <div class="craft-specs-grid">
+            <div class="craft-spec-item">
+              <div class="craft-spec-name">Surface Finish</div>
+              <div class="craft-spec-val">Ultra-Matte Mineral Plaster</div>
+            </div>
+            <div class="craft-spec-item">
+              <div class="craft-spec-name">Color Palette</div>
+              <div class="craft-spec-val">Neutral Stone, Sand & Basalt</div>
+            </div>
+            <div class="craft-spec-item">
+              <div class="craft-spec-name">Dimensions</div>
+              <div class="craft-spec-val">Custom Bespoke Sizes Available</div>
+            </div>
+            <div class="craft-spec-item">
+              <div class="craft-spec-name">Acoustics & Mass</div>
+              <div class="craft-spec-val">Solid Tactile Relief Substrate</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ================= PAGE 2: PRODUCTS / SHOP ================= -->
+    <div id="page-shop" class="page-view shop-view">
+      <div class="section-header">
+        <span class="section-eyebrow">Artworks & Editions</span>
+        <h2 class="section-title">All Curated Relief Collections</h2>
+        <p class="section-subtitle">
+          Select any piece to inquire about tailored dimensions, frame profiles, or direct acquisition for your sanctuary.
+        </p>
       </div>
-      <div class="hero-meta">
-        <p class="hero-sub">Sculpted contemporary relief panels celebrating organic topography and the interplay of natural light.</p>
-        <div class="hero-specs">Edition 01 / Bespoke Dimensions</div>
+
+      <!-- Category Filter Bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">All Artworks (14)</button>
+        <button class="filter-btn" onclick="filterProducts('form', this)">Form (5)</button>
+        <button class="filter-btn" onclick="filterProducts('elements', this)">Elements (5)</button>
+        <button class="filter-btn" onclick="filterProducts('indian-minimal', this)">Indian Minimal (4)</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-container">
+        <!-- Rendered via JavaScript for dynamic filtering & clean maintenance -->
       </div>
     </div>
-  </section>
 
+    <!-- ================= PAGE 3: ARCHITECTURAL GALLERY ================= -->
+    <div id="page-gallery" class="page-view gallery-view">
+      <div class="section-header">
+        <span class="section-eyebrow">In Situ Impressions</span>
+        <h2 class="section-title">Sculptural Presence in Living Spaces</h2>
+        <p class="section-subtitle">
+          Visualizing the dialogue between contemporary architecture, natural sunlight, and tactile 3D reliefs.
+        </p>
+      </div>
+
+      <div class="gallery-masonry">
+        <div class="gallery-item col-8">
+          <img src="art.png" alt="Huevoke Living Room Installation" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'" />
+          <div class="gallery-overlay">
+            <h3>Contour Flow in Penthouse Lounge</h3>
+            <p>Custom 1800 × 1200 mm Panel in Warm Limestone</p>
+          </div>
+        </div>
+
+        <div class="gallery-item col-4">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80" alt="Minimalist hallway art" />
+          <div class="gallery-overlay">
+            <h3>Ganesha — The Curve</h3>
+            <p>Foyer Installation with Grazing Light</p>
+          </div>
+        </div>
+
+        <div class="gallery-item col-4">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80" alt="Master Bedroom Wall Art" />
+          <div class="gallery-overlay">
+            <h3>Shiva — Stillness</h3>
+            <p>Bedroom Alcove in Sand Mineral</p>
+          </div>
+        </div>
+
+        <div class="gallery-item col-8">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Dining Room Relief Art" />
+          <div class="gallery-overlay">
+            <h3>Eclipse & Tidal Landscape Duet</h3>
+            <p>Dining Sanctuary Architectural Pair</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 4: BESPOKE ATELIER ================= -->
+    <div id="page-atelier" class="page-view atelier-view">
+      <div class="section-header">
+        <span class="section-eyebrow">Custom Commissions</span>
+        <h2 class="section-title">The Bespoke Commissioning Process</h2>
+        <p class="section-subtitle">
+          Collaborate with Huevoke to tailor dimensional relief installations for villas, luxury residences, and architectural spaces.
+        </p>
+      </div>
+
+      <div class="atelier-layout">
+        <div class="atelier-info">
+          <h3 style="font-family: var(--font-display); font-size: 28px; color: var(--sand-light); margin-bottom: 18px;">How We Craft Your Piece</h3>
+          <p style="font-size: 14px; color: var(--sand-muted); line-height: 1.8; font-weight: 300;">
+            Whether you need a statement wall panel exceeding standard sizes, a customized multi-layer depth elevation, or a specific stone pigment to harmonize with your travertine flooring, our atelier customizes every millimeter.
+          </p>
+
+          <div class="process-timeline">
+            <div class="timeline-step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <h4>Spatial Consultation & Sizing</h4>
+                <p>Share your wall dimensions, interior palette, and lighting angles. We advise on scale and shadow projection.</p>
+              </div>
+            </div>
+
+            <div class="timeline-step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <h4>3D Relief Prototyping</h4>
+                <p>Digital preview of the depth layers and light simulation to ensure ideal volumetric presence.</p>
+              </div>
+            </div>
+
+            <div class="timeline-step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <h4>Hand-Casting & Ultra-Matte Finishing</h4>
+                <p>Precision dimensional casting followed by hand-applied mineral coats for seamless tactile quality.</p>
+              </div>
+            </div>
+
+            <div class="timeline-step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <h4>Secure Delivery & Installation Guidance</h4>
+                <p>Crated in protective custom framing with flush French cleat mounting hardware included.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct WhatsApp Form Inquiry -->
+        <div class="inquiry-form-card">
+          <h3 style="font-family: var(--font-display); font-size: 28px; color: var(--sand-light); margin-bottom: 8px;">Direct Atelier Inquiry</h3>
+          <p style="font-size: 13px; color: var(--sand-muted); margin-bottom: 28px;">Fill details to open a dedicated WhatsApp chat with our design desk.</p>
+
+          <form id="inquiryForm" onsubmit="handleInquirySubmit(event)">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="inqName" class="form-input" placeholder="e.g. Ananya Rao" required />
+            </div>
+
+            <div class="form-group">
+              <label>Selected Artwork / Collection of Interest</label>
+              <select id="inqArt" class="form-select">
+                <optgroup label="FORM Collection">
+                  <option value="Contour Flow">Contour Flow</option>
+                  <option value="Erosion">Erosion</option>
+                  <option value="Fluid Motion">Fluid Motion</option>
+                  <option value="Balance">Balance</option>
+                  <option value="Tidal Landscape">Tidal Landscape</option>
+                </optgroup>
+                <optgroup label="ELEMENTS Collection">
+                  <option value="Lotus Bloom">Lotus Bloom</option>
+                  <option value="Eclipse">Eclipse</option>
+                  <option value="Moon Phases">Moon Phases</option>
+                  <option value="Mountain & Mist">Mountain & Mist</option>
+                  <option value="Sun / Horizon">Sun / Horizon</option>
+                </optgroup>
+                <optgroup label="INDIAN MINIMAL Collection">
+                  <option value="Ganesha — The Curve">Ganesha — The Curve</option>
+                  <option value="Shiva — Stillness">Shiva — Stillness</option>
+                  <option value="Nataraja — Cosmic Rhythm">Nataraja — Cosmic Rhythm</option>
+                  <option value="Ram — The Mighty">Ram — The Mighty</option>
+                </optgroup>
+                <option value="Fully Custom Bespoke Panel">Fully Custom Bespoke Commission</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Wall / Space Dimensions (Optional)</label>
+              <input type="text" id="inqSize" class="form-input" placeholder="e.g. 900 x 1200 mm or 4 x 6 ft" />
+            </div>
+
+            <div class="form-group">
+              <label>Location & Project Notes</label>
+              <textarea id="inqNotes" class="form-textarea" placeholder="Describe your interior project or city (e.g. Villa Hallway, Hyderabad)..."></textarea>
+            </div>
+
+            <button type="submit" class="form-submit-btn">
+              <i data-lucide="send" style="width:16px;height:16px;"></i>
+              Send Inquiry to WhatsApp Desk
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">HUEVOKE</div>
+        <p>
+          Contemporary 3D sculpted wall art celebrating stillness, tactile geometry, and the interplay of light and shadow.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a onclick="switchPage('home')">Home & Vision</a></li>
+          <li><a onclick="switchPage('shop')">Artworks & Shop</a></li>
+          <li><a onclick="switchPage('gallery')">Architectural Gallery</a></li>
+          <li><a onclick="switchPage('atelier')">Bespoke Atelier</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Collections</h4>
+        <ul class="footer-links">
+          <li><a onclick="filterAndShowShop('form')">Form Collection</a></li>
+          <li><a onclick="filterAndShowShop('elements')">Elements Collection</a></li>
+          <li><a onclick="filterAndShowShop('indian-minimal')">Indian Minimal</a></li>
+          <li><a onclick="switchPage('atelier')">Custom Commissions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atelier Desk</h4>
+        <div class="contact-item">
+          <i data-lucide="phone" style="width:15px;height:15px;color:var(--accent-clay);"></i>
+          <a href="tel:+919353417406">+91 93534 17406</a>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="mail" style="width:15px;height:15px;color:var(--accent-clay);"></i>
+          <a href="mailto:thecleanlines27@gmail.com">thecleanlines27@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="instagram" style="width:15px;height:15px;color:var(--accent-clay);"></i>
+          <a href="https://instagram.com" target="_blank">@HUEVOKE.DECOR</a>
+        </div>
+        <div class="contact-item" style="margin-top: 14px;">
+          <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent-clay);"></i>
+          <span>Hyderabad & Pan-India Dispatch</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 HUEVOKE DECOR. ALL RIGHTS RESERVED.</span>
+      <span>HANDCRAFTED TACTILE RELIEF ART</span>
+    </div>
+  </footer>
+
+  <!-- Product Database & Application Script -->
   <script>
+    // Product Catalog Database
+    const catalogData = [
+      // FORM Collection
+      {
+        id: 'contour-flow',
+        name: 'Contour Flow',
+        collection: 'form',
+        collectionLabel: 'FORM COLLECTION',
+        price: 'Price on Request',
+        sizes: '600×600 | 900×900 | 1200×1200 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Undulating topographic strata evoking continuous fluid landforms.'
+      },
+      {
+        id: 'erosion',
+        name: 'Erosion',
+        collection: 'form',
+        collectionLabel: 'FORM COLLECTION',
+        price: 'Price on Request',
+        sizes: '800×1200 | 1000×1500 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Deep geological carved relief celebrating the timeless passage of wind and water.'
+      },
+      {
+        id: 'fluid-motion',
+        name: 'Fluid Motion',
+        collection: 'form',
+        collectionLabel: 'FORM COLLECTION',
+        price: 'Price on Request',
+        sizes: '900×900 | 1200×1200 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Dynamic harmonic curves frozen in tactile gypsum stillness.'
+      },
+      {
+        id: 'balance',
+        name: 'Balance',
+        collection: 'form',
+        collectionLabel: 'FORM COLLECTION',
+        price: 'Price on Request',
+        sizes: '600×900 | 900×1350 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Symmetrical tension between geometric planes and organic voids.'
+      },
+      {
+        id: 'tidal-landscape',
+        name: 'Tidal Landscape',
+        collection: 'form',
+        collectionLabel: 'FORM COLLECTION',
+        price: 'Price on Request',
+        sizes: '1200×600 | 1800×900 mm (Horizontal)',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Sweeping horizontal relief capturing the rhythmic shoreline currents.'
+      },
+
+      // ELEMENTS Collection
+      {
+        id: 'lotus-bloom',
+        name: 'Lotus Bloom',
+        collection: 'elements',
+        collectionLabel: 'ELEMENTS COLLECTION',
+        price: 'Price on Request',
+        sizes: '800×800 | 1000×1000 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Deconstructed botanical petals arranged in pure concentric geometry.'
+      },
+      {
+        id: 'eclipse',
+        name: 'Eclipse',
+        collection: 'elements',
+        collectionLabel: 'ELEMENTS COLLECTION',
+        price: 'Price on Request',
+        sizes: '750×750 | 1000×1000 mm (Circular/Square)',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Overlapping celestial shadow discs creating a luminous rim effect.'
+      },
+      {
+        id: 'moon-phases',
+        name: 'Moon Phases',
+        collection: 'elements',
+        collectionLabel: 'ELEMENTS COLLECTION',
+        price: 'Price on Request',
+        sizes: '1500×450 mm (Triptych / Linear)',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'A sequential study of lunar silhouettes carved across textured reliefs.'
+      },
+      {
+        id: 'mountain-mist',
+        name: 'Mountain & Mist',
+        collection: 'elements',
+        collectionLabel: 'ELEMENTS COLLECTION',
+        price: 'Price on Request',
+        sizes: '900×1200 | 1200×1600 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Atmospheric ridge elevations transitioning into soft, seamless voids.'
+      },
+      {
+        id: 'sun-horizon',
+        name: 'Sun / Horizon',
+        collection: 'elements',
+        collectionLabel: 'ELEMENTS COLLECTION',
+        price: 'Price on Request',
+        sizes: '900×900 | 1200×1200 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'A pure geometric semicircle resting upon subtle horizontal striations.'
+      },
+
+      // INDIAN MINIMAL Collection
+      {
+        id: 'ganesha-curve',
+        name: 'Ganesha — The Curve',
+        collection: 'indian-minimal',
+        collectionLabel: 'INDIAN MINIMAL',
+        price: 'Price on Request',
+        sizes: '600×900 | 900×1350 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'The auspicious primal trunk and curve sculpted in a single continuous minimalist stroke.'
+      },
+      {
+        id: 'shiva-stillness',
+        name: 'Shiva — Stillness',
+        collection: 'indian-minimal',
+        collectionLabel: 'INDIAN MINIMAL',
+        price: 'Price on Request',
+        sizes: '800×1200 | 1000×1500 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Abstract trident and crescent silhouettes representing meditative eternity.'
+      },
+      {
+        id: 'nataraja-rhythm',
+        name: 'Nataraja — Cosmic Rhythm',
+        collection: 'indian-minimal',
+        collectionLabel: 'INDIAN MINIMAL',
+        price: 'Price on Request',
+        sizes: '900×900 | 1200×1200 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'Dynamic circular energy contours echoing the celestial dance of creation and dissolution.'
+      },
+      {
+        id: 'ram-mighty',
+        name: 'Ram — The Mighty',
+        collection: 'indian-minimal',
+        collectionLabel: 'INDIAN MINIMAL',
+        price: 'Price on Request',
+        sizes: '600×1200 | 800×1600 mm',
+        finish: 'Ultra-Matte Mineral Plaster',
+        image: 'art.png',
+        desc: 'The archer’s unwavering geometric bow line embodying righteousness and quiet strength.'
+      }
+    ];
+
+    // Render Products
+    function renderProducts(items) {
+      const container = document.getElementById('products-container');
+      container.innerHTML = '';
+
+      items.forEach(prod => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        const waMessage = encodeURIComponent(`Hi Huevoke Atelier, I would like to inquire about the "${prod.name}" piece from the ${prod.collectionLabel}. Please share size options and pricing.`);
+        const waLink = `https://wa.me/919353417406?text=${waMessage}`;
+
+        card.innerHTML = `
+          <div class="product-img-wrapper">
+            <img src="${prod.image}" alt="${prod.name}" onerror="this.src='art.png'" />
+            <div class="product-badge-overlay">${prod.finish}</div>
+          </div>
+          <div class="product-details">
+            <div>
+              <span class="product-collection-tag">${prod.collectionLabel}</span>
+              <h3 class="product-name">${prod.name}</h3>
+              <p style="font-size: 13px; color: var(--sand-muted); margin-bottom: 14px; font-weight: 300;">${prod.desc}</p>
+              
+              <div class="product-specs">
+                <span><strong>Available Sizes:</strong> ${prod.sizes}</span>
+                <span><strong>Finish:</strong> Non-Reflective Ultra-Matte</span>
+              </div>
+            </div>
+
+            <div class="product-footer">
+              <div class="product-price-box">
+                <span class="price-label">Acquisition</span>
+                <span class="price-value">${prod.price}</span>
+              </div>
+              <a href="${waLink}" target="_blank" class="btn-inquire-prod">
+                <i data-lucide="message-circle" style="width:14px;height:14px;"></i>
+                Inquire
+              </a>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Refresh Lucide icons
+      lucide.createIcons();
+    }
+
+    // Filter Products Logic
+    function filterProducts(category, btnElement) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      if (category === 'all') {
+        renderProducts(catalogData);
+      } else {
+        const filtered = catalogData.filter(p => p.collection === category);
+        renderProducts(filtered);
+      }
+    }
+
+    function filterAndShowShop(category) {
+      switchPage('shop');
+      const targetBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => 
+        b.getAttribute('onclick') && b.getAttribute('onclick').includes(category)
+      );
+      filterProducts(category, targetBtn);
+    }
+
+    // Multi-page Switcher
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+      const activeView = document.getElementById(`page-${pageId}`);
+      if (activeView) activeView.classList.add('active');
+
+      // Update Nav Link State
+      const matchingLink = Array.from(document.querySelectorAll('.nav-link')).find(l => 
+        l.getAttribute('onclick') && l.getAttribute('onclick').includes(pageId)
+      );
+      if (matchingLink) matchingLink.classList.add('active');
+
+      // Toggle WebGL canvas visibility for non-home pages if desired, or keep subtle
+      const canvas = document.getElementById('webgl-canvas');
+      const overlay = document.querySelector('.viewport-overlay');
+      if (pageId === 'home') {
+        canvas.style.opacity = '1';
+        overlay.style.opacity = '1';
+      } else {
+        canvas.style.opacity = '0.15'; // subtle atmospheric backdrop on shop/gallery
+        overlay.style.opacity = '0.9';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Handle Atelier Form Submission
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('inqName').value;
+      const art = document.getElementById('inqArt').value;
+      const size = document.getElementById('inqSize').value || 'Standard';
+      const notes = document.getElementById('inqNotes').value || 'N/A';
+
+      const msg = `*New Huevoke Atelier Inquiry*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Selected Piece:* ${encodeURIComponent(art)}%0A*Preferred Size:* ${encodeURIComponent(size)}%0A*Notes/Location:* ${encodeURIComponent(notes)}`;
+      const url = `https://wa.me/919353417406?text=${msg}`;
+      window.open(url, '_blank');
+    }
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Initialize Products and Icons on load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts(catalogData);
+      lucide.createIcons();
+    });
+
+    // ================= THREE.JS 3D DEPTH SHADER =================
     const canvas = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas, 
+      antialias: true, 
+      alpha: true, 
+      powerPreference: "high-performance" 
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const textureLoader = new THREE.TextureLoader();
 
-    // Load textures
-    const originalTexture = textureLoader.load('art.png', (tex) => {
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      updateAspect();
-    });
-
-    const depthTexture = textureLoader.load('art-depth.png', (tex) => {
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-    });
+    const originalTexture = textureLoader.load('art.png', () => updateAspect());
+    const depthTexture = textureLoader.load('art-depth.png');
 
     const uniforms = {
       uTexture: { value: originalTexture },
@@ -265,7 +1798,7 @@
         varying vec2 vUv;
 
         void main() {
-          // Calculate proportional cover scaling without stretching
+          // Precise aspect-ratio proportional cover math
           vec2 uv = vUv;
           if (uScreenRatio > uPlaneRatio) {
             float scale = uPlaneRatio / uScreenRatio;
@@ -275,14 +1808,15 @@
             uv.x = (uv.x - 0.5) * scale + 0.5;
           }
 
-          // Depth displacement offset
           vec4 depth = texture2D(uDepthMap, uv);
-          vec2 displacedUv = uv + (uMouse * depth.r * 0.028);
+          // Controlled micro-parallax depth tilt
+          vec2 displacedUv = uv + (uMouse * depth.r * 0.025);
 
           gl_FragColor = texture2D(uTexture, displacedUv);
         }
       `,
-      uniforms: uniforms
+      uniforms: uniforms,
+      transparent: true
     });
 
     scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
@@ -294,7 +1828,6 @@
       uniforms.uScreenRatio.value = window.innerWidth / window.innerHeight;
     }
 
-    // Mouse Tracking
     let targetX = 0, targetY = 0;
     window.addEventListener('mousemove', (e) => {
       targetX = (e.clientX / window.innerWidth - 0.5) * 2.0;
