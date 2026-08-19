@@ -3,28 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Huevoke | Contemporary 3D Wall Art</title>
+  <title>Huevoke — Contemporary 3D Wall Art</title>
   
-  <!-- Google Fonts -->
+  <!-- Premium Editorial Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <!-- Three.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
+    :root {
+      --bg-dark: #0d0c0b;
+      --sand-light: #f5f2ed;
+      --sand-muted: #9c958d;
+      --border-subtle: rgba(245, 242, 237, 0.15);
+      --font-display: 'Italiana', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
     * { 
       margin: 0; 
       padding: 0; 
       box-sizing: border-box; 
     }
+
     body { 
-      background-color: #0d0d0d; 
-      color: #e5e5e5; 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background-color: var(--bg-dark); 
+      color: var(--sand-light); 
+      font-family: var(--font-body); 
       min-height: 100vh; 
-      overflow-x: hidden; 
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     
     /* Navigation Bar */
@@ -33,36 +44,59 @@
       top: 0; 
       left: 0; 
       width: 100%; 
-      padding: 30px 45px; 
+      padding: 36px 60px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
-      z-index: 100; 
-      mix-blend-mode: difference;
+      z-index: 100;
     }
+
     .logo { 
-      font-family: 'Cormorant Garamond', serif; 
-      font-size: 28px; 
-      letter-spacing: 5px; 
+      font-family: var(--font-display); 
+      font-size: 26px; 
+      letter-spacing: 6px; 
       text-transform: uppercase; 
-      font-weight: 300; 
-      color: #fff; 
+      font-weight: 400; 
+      color: var(--sand-light);
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--sand-muted);
+    }
+
     .inquire-btn { 
-      color: #fff; 
+      color: var(--sand-light); 
       text-decoration: none; 
       font-size: 11px; 
-      letter-spacing: 2px; 
+      letter-spacing: 2.5px; 
       text-transform: uppercase; 
-      border-bottom: 1px solid rgba(255,255,255,0.4); 
-      padding-bottom: 4px; 
-      transition: border-color 0.3s;
+      padding: 10px 22px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 40px;
+      background: rgba(13, 12, 11, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .inquire-btn:hover {
-      border-color: #fff;
+      background: var(--sand-light);
+      color: var(--bg-dark);
+      border-color: var(--sand-light);
+      transform: translateY(-2px);
     }
     
-    /* Fullscreen 3D Canvas */
+    /* 3D WebGL Canvas Layer */
     #webgl-canvas { 
       position: fixed; 
       top: 0; 
@@ -71,33 +105,90 @@
       height: 100%; 
       z-index: 1; 
     }
+
+    /* Ambient Shading to ensure crisp text contrast */
+    .viewport-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 40%, rgba(13, 12, 11, 0.4) 100%),
+                  linear-gradient(to top, rgba(13, 12, 11, 0.85) 0%, rgba(13, 12, 11, 0.2) 25%, transparent 60%);
+    }
     
-    /* Hero Content */
+    /* Hero Section */
     .hero { 
+      position: relative;
       height: 100vh; 
       width: 100%; 
-      position: relative; 
       display: flex; 
       flex-direction: column; 
       justify-content: flex-end; 
-      padding: 60px 45px; 
+      padding: 70px 60px; 
       pointer-events: none; 
       z-index: 10; 
     }
-    .hero-title { 
-      font-family: 'Cormorant Garamond', serif; 
-      font-size: clamp(38px, 5.5vw, 75px); 
-      font-weight: 300; 
-      line-height: 1.05; 
-      margin-bottom: 15px; 
-      color: #fff; 
+
+    .hero-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
     }
+
+    .hero-title-group {
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--sand-muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .hero-title { 
+      font-family: var(--font-display); 
+      font-size: clamp(42px, 5.5vw, 88px); 
+      font-weight: 400; 
+      line-height: 1.02; 
+      color: var(--sand-light); 
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-meta {
+      max-width: 340px;
+      text-align: right;
+    }
+
     .hero-sub { 
       font-size: 13px; 
-      color: #999; 
-      letter-spacing: 1px; 
-      max-width: 440px; 
-      line-height: 1.6; 
+      color: #ccc5b9; 
+      letter-spacing: 0.8px; 
+      line-height: 1.7; 
+      margin-bottom: 18px;
+      font-weight: 300;
+    }
+
+    .hero-specs {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand-muted);
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 24px 30px; }
+      .hero { padding: 40px 30px; }
+      .hero-container { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .hero-meta { text-align: left; max-width: 100%; }
+      .nav-label { display: none; }
     }
   </style>
 </head>
@@ -105,33 +196,56 @@
 
   <nav>
     <div class="logo">Huevoke</div>
-    <a href="https://wa.me/919999999999?text=Hi%20Huevoke,%20I'm%20interested%20in%20custom%20wall%20art." target="_blank" class="inquire-btn">Inquire Bespoke</a>
+    <div class="nav-actions">
+      <span class="nav-label">Series 01 — Tactile Planes</span>
+      <a href="https://wa.me/919999999999?text=Hi%20Huevoke,%20I'm%20interested%20in%20custom%20wall%20art." target="_blank" class="inquire-btn">Acquire Piece</a>
+    </div>
   </nav>
 
   <canvas id="webgl-canvas"></canvas>
+  <div class="viewport-overlay"></div>
 
   <section class="hero">
-    <h1 class="hero-title">Architectural Depth.<br>Minimal Forms.</h1>
-    <p class="hero-sub">Contemporary sculpted wall surfaces designed to transform luxury spaces through light and shadow interplay.</p>
+    <div class="hero-container">
+      <div class="hero-title-group">
+        <span class="hero-eyebrow">Sculptural Wall Architecture</span>
+        <h1 class="hero-title">Architectural Depth.<br>Minimal Forms.</h1>
+      </div>
+      <div class="hero-meta">
+        <p class="hero-sub">Sculpted contemporary relief panels celebrating organic topography and the interplay of natural light.</p>
+        <div class="hero-specs">Edition 01 / Bespoke Dimensions</div>
+      </div>
+    </div>
   </section>
 
   <script>
     const canvas = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const textureLoader = new THREE.TextureLoader();
 
-    // PNG Files Loading
-    const originalTexture = textureLoader.load('art.png');
-    const depthTexture = textureLoader.load('art-depth.png');
+    // Load textures
+    const originalTexture = textureLoader.load('art.png', (tex) => {
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      updateAspect();
+    });
+
+    const depthTexture = textureLoader.load('art-depth.png', (tex) => {
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+    });
 
     const uniforms = {
       uTexture: { value: originalTexture },
       uDepthMap: { value: depthTexture },
-      uMouse: { value: new THREE.Vector2(0, 0) }
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uPlaneRatio: { value: 1.0 },
+      uScreenRatio: { value: window.innerWidth / window.innerHeight }
     };
 
     const material = new THREE.ShaderMaterial({
@@ -146,21 +260,41 @@
         uniform sampler2D uTexture;
         uniform sampler2D uDepthMap;
         uniform vec2 uMouse;
+        uniform float uPlaneRatio;
+        uniform float uScreenRatio;
         varying vec2 vUv;
+
         void main() {
-          vec4 depth = texture2D(uDepthMap, vUv);
-          // Interactive 3D Depth Offset
-          vec2 fake3d = vUv + (uMouse * depth.r * 0.035);
-          gl_FragColor = texture2D(uTexture, fake3d);
+          // Calculate proportional cover scaling without stretching
+          vec2 uv = vUv;
+          if (uScreenRatio > uPlaneRatio) {
+            float scale = uPlaneRatio / uScreenRatio;
+            uv.y = (uv.y - 0.5) * scale + 0.5;
+          } else {
+            float scale = uScreenRatio / uPlaneRatio;
+            uv.x = (uv.x - 0.5) * scale + 0.5;
+          }
+
+          // Depth displacement offset
+          vec4 depth = texture2D(uDepthMap, uv);
+          vec2 displacedUv = uv + (uMouse * depth.r * 0.028);
+
+          gl_FragColor = texture2D(uTexture, displacedUv);
         }
       `,
       uniforms: uniforms
     });
 
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-    scene.add(mesh);
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
 
-    // Mouse Tracking for Tilt
+    function updateAspect() {
+      if (originalTexture.image) {
+        uniforms.uPlaneRatio.value = originalTexture.image.naturalWidth / originalTexture.image.naturalHeight;
+      }
+      uniforms.uScreenRatio.value = window.innerWidth / window.innerHeight;
+    }
+
+    // Mouse Tracking
     let targetX = 0, targetY = 0;
     window.addEventListener('mousemove', (e) => {
       targetX = (e.clientX / window.innerWidth - 0.5) * 2.0;
@@ -169,15 +303,15 @@
 
     function animate() {
       requestAnimationFrame(animate);
-      // Smooth Inertia Effect
-      uniforms.uMouse.value.x += (targetX - uniforms.uMouse.value.x) * 0.05;
-      uniforms.uMouse.value.y += (targetY - uniforms.uMouse.value.y) * 0.05;
+      uniforms.uMouse.value.x += (targetX - uniforms.uMouse.value.x) * 0.04;
+      uniforms.uMouse.value.y += (targetY - uniforms.uMouse.value.y) * 0.04;
       renderer.render(scene, camera);
     }
     animate();
 
     window.addEventListener('resize', () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
+      updateAspect();
     });
   </script>
 </body>
