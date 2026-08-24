@@ -11,7 +11,9 @@
   <link rel="preload" as="image" href="assets/images/cf1.3.webp">
   <link rel="preload" as="image" href="assets/images/cf1.5.webp">
   <link rel="preload" as="image" href="assets/images/lb1.3.webp">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/depth-showcase.css">
 </head>
 
 <body class="home-v5">
@@ -48,97 +50,83 @@
     <div class="scroll-cue">Scroll to explore</div>
   </section>
 
-  <!-- FORM: rotating 3D gallery wall -->
-  <section class="pin-story form-pin-story story-lock-section" id="formStory" aria-label="FORM collection interactive gallery">
-    <div class="pin-stage form-pin-stage interactive-surface" id="formStage">
-      <aside class="form-wordmark" aria-hidden="true">
-        <span>F</span><span>O</span><span>R</span><span>M</span>
+  <!-- TRUE 3D HERO OBJECTS -->
+  <section class="depth-showcase" id="depthShowcase" aria-label="HUEVOKE objects in 3D">
+    <div class="depth-stage" id="depthStage">
+      <div class="depth-backdrop-word depth-backdrop-form" aria-hidden="true">FORM</div>
+      <div class="depth-backdrop-word depth-backdrop-elements" aria-hidden="true">ELEMENTS</div>
+
+      <aside class="depth-copy">
+        <div class="eyebrow">HUEVOKE / IN DEPTH</div>
+        <h2>Sculpted<br><em>in motion.</em></h2>
+        <p>Two signature objects shown as real 3D forms — rotate them, drag them and watch their depth shift as the page moves.</p>
+        <a class="depth-collection-link" href="collections.html">Explore all collections →</a>
       </aside>
 
-      <div class="form-gallery-zone">
-        <div class="gallery-scene" id="formGalleryScene">
-          <div class="gallery-wheel" id="formGalleryWheel">
-            <figure class="gallery-panel" data-gallery-index="0"><img src="assets/images/cf1.3.webp" alt="Contour Flow I detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="1"><img src="assets/images/cf2.3.webp" alt="Contour Flow II detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="2"><img src="assets/images/e1.3.webp" alt="Erosion I detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="3"><img src="assets/images/e2.4.webp" alt="Erosion II detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="4"><img src="assets/images/fm1.4.webp" alt="Fluid Motion I detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="5"><img src="assets/images/fm2.3.webp" alt="Fluid Motion II detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="6"><img src="assets/images/b1.3.webp" alt="Balance I detail"></figure>
-            <figure class="gallery-panel" data-gallery-index="7"><img src="assets/images/tl1.3.webp" alt="Tidal Landscape I detail"></figure>
-          </div>
-          <div class="gallery-floor-shadow"></div>
+      <article class="depth-object depth-object-cf" id="depthCF">
+        <div class="depth-model-shell">
+          <model-viewer
+            id="cfModel"
+            src="assets/models/cf1.glb"
+            poster="assets/images/cf1.2.webp"
+            alt="Contour Flow I 3D object"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="8deg"
+            interaction-prompt="none"
+            shadow-intensity="0.65"
+            shadow-softness="0.9"
+            exposure="1.02"
+            environment-image="neutral"
+            camera-orbit="-12deg 78deg 2.9m"
+            field-of-view="31deg"
+            disable-zoom>
+            <img slot="poster" class="depth-model-poster" src="assets/images/cf1.2.webp" alt="Contour Flow I">
+          </model-viewer>
         </div>
+        <div class="depth-object-meta">
+          <span class="eyebrow">FORM / 01</span>
+          <h3>Contour Flow I</h3>
+          <a href="product.html?slug=contour-flow-01">View object →</a>
+        </div>
+      </article>
 
-        <div class="object-caption form-object-caption">
-          <span id="formSeries" class="eyebrow">CONTOUR FLOW</span>
-          <h3 id="formObjectName">Contour Flow I</h3>
-          <div class="story-progress">
-            <span id="formCurrent">01</span>
-            <div class="story-line"><i id="formProgressBar"></i></div>
-            <span>08</span>
-          </div>
+      <article class="depth-object depth-object-lotus" id="depthLotus">
+        <div class="depth-model-shell depth-model-shell-round">
+          <model-viewer
+            id="lotusModel"
+            src="assets/models/lotus-bloom.glb"
+            poster="assets/images/lb2.1.png"
+            alt="Lotus Bloom 3D object"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="7deg"
+            interaction-prompt="none"
+            shadow-intensity="0.6"
+            shadow-softness="0.9"
+            exposure="1.02"
+            environment-image="neutral"
+            camera-orbit="16deg 76deg 3m"
+            field-of-view="31deg"
+            disable-zoom>
+            <img slot="poster" class="depth-model-poster" src="assets/images/lb2.1.png" alt="Lotus Bloom">
+          </model-viewer>
         </div>
-      </div>
+        <div class="depth-object-meta">
+          <span class="eyebrow">ELEMENTS / 02</span>
+          <h3>Lotus Bloom</h3>
+          <a href="product.html?slug=lotus-bloom">View object →</a>
+        </div>
+      </article>
 
-      <div class="form-full-zone">
-        <div class="full-image-stage" id="formFullStage">
-          <figure class="full-card" id="formFullCard">
-            <img id="formFullImage" src="assets/images/cf1.5.webp" alt="Contour Flow I full object">
-          </figure>
-          <div class="full-aura full-aura-a"></div>
-          <div class="full-aura full-aura-b"></div>
-        </div>
-        <div class="full-meta">
-          <span id="formCode" class="eyebrow">HV-F01 CF</span>
-          <h3 id="formFullName">Contour Flow I</h3>
-          <a id="formViewLink" href="product.html?slug=contour-flow-01">View object →</a>
-        </div>
+      <div class="depth-progress" aria-hidden="true">
+        <span>01</span><i><b id="depthProgressBar"></b></i><span>02</span>
       </div>
     </div>
   </section>
 
-  <!-- ELEMENTS / LOTUS BLOOM: hover/touch magnetic gallery -->
-  <section class="lotus-hover-section" id="lotusStory" aria-label="Lotus Bloom magnetic floating gallery">
-    <div class="lotus-hover-stage" id="lotusStage">
-      <aside class="lotus-copy-panel lotus-copy-panel-v8">
-        <div class="eyebrow">02 / ELEMENTS</div>
-        <h2>Lotus<br>Bloom</h2>
-        <p>Petal, shadow and carved depth — suspended as a quiet field of forms.</p>
-        <a href="product.html?slug=lotus-bloom" class="lotus-explore">Explore Lotus Bloom →</a>
-      </aside>
-
-      <div class="magnetic-gallery magnetic-gallery-v8" id="magneticGallery">
-        <figure class="magnetic-card lotus-hover-card magnetic-card-1" data-preview="lb1">
-          <img src="assets/images/lb1.2.webp" alt="Lotus Bloom product view">
-        </figure>
-
-        <figure class="magnetic-card lotus-hover-card magnetic-card-2" data-preview="lb1">
-          <img src="assets/images/lb1.4.webp" alt="Lotus Bloom detail view">
-        </figure>
-
-        <figure class="magnetic-card lotus-hover-card magnetic-card-3" data-preview="lb2">
-          <img src="assets/images/lb2.2.png" alt="Lotus Bloom II product view">
-        </figure>
-
-        <figure class="magnetic-card lotus-hover-card magnetic-card-4" data-preview="lb2">
-          <img src="assets/images/lb2.3.png" alt="Lotus Bloom II detailed view">
-        </figure>
-
-        <figure class="magnetic-card lotus-hover-card magnetic-card-5" data-preview="lb2">
-          <img src="assets/images/lb2.4.png" alt="Lotus Bloom II macro view">
-        </figure>
-
-        <aside class="lotus-preview-popover" id="lotusPreview" aria-hidden="true">
-          <img id="lotusPreviewImage" src="assets/images/lb1.5.webp" alt="">
-        </aside>
-
-        <div class="magnetic-glow"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA directly after pinned section -->
   <section class="final-cta v5-final-cta">
     <div class="reveal">
       <div class="eyebrow">HUEVOKE / ENQUIRIES</div>
@@ -183,5 +171,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/depth-showcase.js"></script>
 </body>
 </html>
