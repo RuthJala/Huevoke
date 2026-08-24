@@ -48,17 +48,16 @@
     const storyStage=$("#collectionsStoryStage");
     if(storySection && storyStage){
       const heroProducts=[
-        {series:"FORM / CONTOUR FLOW", name:"Contour Flow I", code:"HV-F01 CF", thickness:"40 mm", sizes:'24" × 36" / 30" × 48"', slug:"contour-flow-01", main:"assets/images/cf1.1.webp", details:["assets/images/cf1.3.webp","assets/images/cf1.4.webp","assets/images/cf1.5.webp"], desc:"A restrained composition of broad organic planes. Contour Flow I uses soft neutral relief to create movement through shadow rather than ornament."},
-        {series:"FORM / EROSION", name:"Erosion I", code:"HV-F04 ER", thickness:"50 mm", sizes:'24" × 36" / 30" × 48"', slug:"erosion-01", main:"assets/images/e1.1.webp", details:["assets/images/e1.3.webp","assets/images/e1.4.webp","assets/images/e1.2.webp"], desc:"An irregular silhouette shaped as if softened by time. Warm terracotta appears within muted sand tones to create a grounded focal point."},
-        {series:"FORM / FLUID MOTION", name:"Fluid Motion I", code:"HV-F06 FM", thickness:"50 mm", sizes:'24" × 36" / 30" × 48"', slug:"fluid-motion-01", main:"assets/images/fm1.1.webp", details:["assets/images/fm1.3.webp","assets/images/fm1.4.webp","assets/images/fm1.5.webp"], desc:"A vertical wave of layered colour and relief. Fluid Motion I combines sage, sand and slate tones in one continuous sculptural gesture."},
-        {series:"FORM / BALANCE", name:"Balance I", code:"HV-F08 BL", thickness:"50 mm", sizes:'18" × 18" / 24" × 24" / 36" × 36"', slug:"balance-01", main:"assets/images/b1.2.webp", details:["assets/images/b1.3.webp","assets/images/b1.4.webp","assets/images/b1.1.webp"], desc:"Two contrasting masses held within a circular boundary. Balance I explores symmetry without becoming literal."},
-        {series:"FORM / TIDAL LANDSCAPE", name:"Tidal Landscape I", code:"HV-F11 TL", thickness:"40 mm", sizes:'24" × 36" / 30" × 48"', slug:"tidal-landscape-01", main:"assets/images/tl1.2.webp", details:["assets/images/tl1.3.webp","assets/images/tl1.4.webp","assets/images/tl1.5.webp"], desc:"A framed vertical landscape built from layered contours in mineral blue, soft sage and warm sand."},
-        {series:"ELEMENTS / LOTUS BLOOM", name:"Lotus Bloom", code:"HV-E01 LB", thickness:"30 mm", sizes:'18" × 18" / 24" × 24" / 36" × 36"', slug:"lotus-bloom", main:"assets/images/lotus-01.webp", details:["assets/images/lb1.2.webp","assets/images/lb1.4.webp","assets/images/lb1.5.webp"], desc:"A familiar lotus reduced to layered geometry, warm muted colour and sculptural depth."}
+        {series:"FORM / CONTOUR FLOW", name:"Contour Flow I", code:"HV-F01 CF", thickness:"40 mm", sizes:'24" × 36" / 30" × 48"', slug:"contour-flow-01", main:"assets/images/cf1.2.webp", installed:"assets/images/cf1.1.webp", details:["assets/images/cf1.3.webp","assets/images/cf1.4.webp","assets/images/cf1.5.webp"], desc:"A restrained composition of broad organic planes. Contour Flow I uses soft neutral relief to create movement through shadow rather than ornament."},
+        {series:"FORM / EROSION", name:"Erosion I", code:"HV-F04 ER", thickness:"50 mm", sizes:'24" × 36" / 30" × 48"', slug:"erosion-01", main:"assets/images/e1.1.webp", installed:"assets/images/e1.2.webp", details:["assets/images/e1.3.webp","assets/images/e1.4.webp"], desc:"An irregular silhouette shaped as if softened by time. Warm terracotta appears within muted sand tones to create a grounded focal point."},
+        {series:"FORM / FLUID MOTION", name:"Fluid Motion I", code:"HV-F06 FM", thickness:"50 mm", sizes:'24" × 36" / 30" × 48"', slug:"fluid-motion-01", main:"assets/images/fm1.1.webp", installed:"assets/images/fm1.2.webp", details:["assets/images/fm1.3.webp","assets/images/fm1.5.webp"], desc:"A vertical wave of layered colour and relief. Fluid Motion I combines sage, sand and slate tones in one continuous sculptural gesture."},
+        {series:"FORM / BALANCE", name:"Balance I", code:"HV-F08 BL", thickness:"50 mm", sizes:'18" × 18" / 24" × 24" / 36" × 36"', slug:"balance-01", main:"assets/images/b1.1.webp", installed:"assets/images/b1.2.webp", details:["assets/images/b1.3.webp","assets/images/b1.4.webp"], desc:"Two contrasting masses held within a circular boundary. Balance I explores symmetry without becoming literal."},
+        {series:"FORM / TIDAL LANDSCAPE", name:"Tidal Landscape I", code:"HV-F11 TL", thickness:"40 mm", sizes:'24" × 36" / 30" × 48"', slug:"tidal-landscape-01", main:"assets/images/tl1.1.webp", installed:"assets/images/tl1.2.webp", details:["assets/images/tl1.3.webp","assets/images/tl1.5.webp"], desc:"A framed vertical landscape built from layered contours in mineral blue, soft sage and warm sand."},
+        {series:"ELEMENTS / LOTUS BLOOM", name:"Lotus Bloom", code:"HV-E01 LB", thickness:"30 mm", sizes:'18" × 18" / 24" × 24" / 36" × 36"', slug:"lotus-bloom", main:"assets/images/lb2.1.png", installed:"assets/images/lb2.2.png", details:["assets/images/lb2.3.png","assets/images/lb2.4.png","assets/images/lb2.5.png"], desc:"A familiar lotus reduced to layered geometry, warm muted colour and sculptural depth."}
       ];
-      heroProducts.forEach(item=>[item.main,...item.details].forEach(src=>{const im=new Image(); im.decoding='async'; im.src=src;}));
-      const storyMainCard=$("#storyMainCard");
-      const storyMainImage=$("#storyMainImage");
-      const storyMainLink=$("#storyMainLink");
+      const previewAsset=src=>location.hostname==="127.0.0.1"?"https://raw.githubusercontent.com/RuthJala/Huevoke/main/"+src:src;
+      heroProducts.forEach(item=>[item.main,item.installed,...item.details].forEach(src=>{const im=new Image(); im.decoding='async'; im.src=previewAsset(src);}));
+      const spatialScene=$("#spatialScene");
       const storySeries=$("#storySeries");
       const storyTitle=$("#storyTitle");
       const storyDesc=$("#storyDesc");
@@ -71,6 +70,16 @@
       const detailImgs=[$("#detailImg0"),$("#detailImg1"),$("#detailImg2")];
       const detailLinks=[$("#detailLink0"),$("#detailLink1"),$("#detailLink2")];
       if(collectionTotal) collectionTotal.textContent=String(heroProducts.length).padStart(2,"0");
+      const objects=heroProducts.map((item,index)=>{
+        const link=document.createElement("a");
+        link.className="spatial-object";
+        link.href="product.html?slug="+item.slug;
+        link.setAttribute("aria-label","View "+item.name);
+        link.innerHTML='<span class="spatial-object-shadow"></span><span class="spatial-main-plane"><img src="'+previewAsset(item.main)+'" alt="'+item.name+' product view"></span><span class="spatial-secondary plane-installed"><img src="'+previewAsset(item.installed)+'" alt="'+item.name+' installed view"></span><span class="spatial-secondary plane-detail"><img src="'+previewAsset(item.details[0])+'" alt="'+item.name+' detail"></span>';
+        link.dataset.index=String(index);
+        spatialScene?.appendChild(link);
+        return link;
+      });
       let progress=0, target=0, lastIndex=-1, px=0, py=0;
       function setHero(index){
         const item=heroProducts[index]; if(!item) return;
@@ -82,15 +91,9 @@
         if(storyThickness) storyThickness.textContent=item.thickness;
         if(storySizes) storySizes.textContent=item.sizes;
         const href='product.html?slug='+item.slug;
-        if(storyMainLink) storyMainLink.href=href;
         if(storyViewButton) storyViewButton.href=href;
         detailImgs.forEach((img,i)=>{if(img){img.src=item.details[i]||item.main;img.alt=item.name+' detail '+(i+1)}});
         detailLinks.forEach(link=>{if(link) link.href=href});
-        if(storyMainImage && storyMainImage.getAttribute('src')!==item.main){
-          storyMainCard?.animate([{opacity:1,transform:'translate3d(0,0,50px) rotateY(-2deg) scale(1)'},{opacity:.15,transform:'translate3d(24px,6px,0) rotateY(6deg) scale(.975)'},{opacity:1,transform:'translate3d(0,0,50px) rotateY(-2deg) scale(1)'}],{duration:700,easing:'cubic-bezier(.16,1,.3,1)'});
-          storyMainImage.src=item.main;
-          storyMainImage.alt=item.name+' installed view';
-        }
       }
       function updateTargetFromScroll(){
         const rect=storySection.getBoundingClientRect();
@@ -103,10 +106,24 @@
         progress=lerp(progress,target,reduced?1:.12);
         const idx=Math.round(progress);
         if(idx!==lastIndex){lastIndex=idx;setHero(idx)}
-        const float=Math.sin(progress*Math.PI)*6;
-        if(storyMainCard){
-          storyMainCard.style.transform=`translate3d(${px*10}px,${py*10+float}px,60px) rotateX(${py*-5}deg) rotateY(${px*7-2}deg) scale(1.02)`;
-        }
+        objects.forEach((object,index)=>{
+          const distance=index-progress;
+          const passed=distance<0;
+          const abs=Math.abs(distance);
+          const x=passed ? distance*46-abs*105 : distance*32+Math.sin(index*1.8)*34;
+          const y=(passed ? abs*42 : abs*18)+Math.sin((progress+index)*1.7)*8;
+          const z=passed ? 115-abs*760 : 115-abs*920;
+          const rotateY=passed ? -8+abs*24 : 8-distance*19;
+          const rotateX=py*-3+(passed ? abs*4 : distance*-3);
+          const rotateZ=(index%2 ? -1 : 1)*(passed ? abs*5 : distance*3);
+          const opacity=clamp(1-abs*.58,0,1);
+          object.style.transform=`translate3d(calc(-50% + ${x+px*9}px),calc(-50% + ${y+py*7}px),${z}px) rotateX(${rotateX}deg) rotateY(${rotateY+px*3}deg) rotateZ(${rotateZ}deg)`;
+          object.style.opacity=String(opacity);
+          object.style.filter=`blur(${Math.max(0,abs-0.65)*2.2}px) saturate(${1-Math.min(abs*.1,.28)})`;
+          object.style.zIndex=String(1000-Math.round(abs*100));
+          object.style.pointerEvents=abs<.42 ? "auto" : "none";
+          object.classList.toggle("is-active",abs<.42);
+        });
         requestAnimationFrame(renderCollectionStory);
       }
       storyStage.addEventListener('pointermove',e=>{
@@ -550,3 +567,4 @@
   heroMotion();
   requestAnimationFrame(render);
 })();
+

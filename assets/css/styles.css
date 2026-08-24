@@ -2266,3 +2266,59 @@ body.collections-page{background:#f3efe8;color:#1e1b17}
   .story-specs div{grid-template-columns:1fr;gap:4px}
   .story-detail-strip{gap:8px}
 }
+
+/* Collections spatial camera sequence */
+.collections-story{height:650vh;background:#f1ece3}
+.collections-story-stage{grid-template-columns:minmax(220px,.24fr) minmax(520px,.52fr) minmax(270px,.24fr)}
+.collections-story-stage:before{background:
+  radial-gradient(circle at 52% 43%,rgba(255,255,255,.95),rgba(255,255,255,.18) 31%,transparent 58%),
+  linear-gradient(135deg,#f7f3ed 0%,#e9e0d4 55%,#f4efe7 100%)}
+.collections-story-viewer{perspective:1800px;perspective-origin:50% 46%;transform-style:preserve-3d;overflow:visible}
+.spatial-scene{position:absolute;inset:0;transform-style:preserve-3d;z-index:2}
+.spatial-object{position:absolute;left:50%;top:50%;width:min(31vw,470px);height:min(68vh,680px);display:block;transform-style:preserve-3d;will-change:transform,opacity,filter;transition:opacity .12s linear;outline:none}
+.spatial-main-plane{position:absolute;inset:0;display:grid;place-items:center;transform:translateZ(28px);filter:drop-shadow(0 36px 34px rgba(48,38,27,.18));transition:filter .55s var(--ease)}
+.spatial-main-plane:before{content:"";position:absolute;inset:9% 8%;border-radius:5px;background:rgba(84,68,50,.13);transform:translate3d(11px,13px,-20px);filter:blur(8px)}
+.spatial-main-plane img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain}
+.spatial-object-shadow{position:absolute;left:12%;right:12%;bottom:-3%;height:12%;border-radius:50%;background:radial-gradient(ellipse,rgba(50,39,27,.25),transparent 70%);filter:blur(18px);transform:translateZ(-40px) rotateX(76deg)}
+.spatial-secondary{position:absolute;display:block;overflow:hidden;border:1px solid rgba(42,34,26,.1);background:#e6ddd1;box-shadow:0 24px 56px rgba(45,35,25,.14);opacity:.86;transition:opacity .5s var(--ease);backface-visibility:hidden}
+.spatial-secondary img{width:100%;height:100%;object-fit:cover}
+.plane-installed{width:38%;aspect-ratio:4/5;right:-19%;top:5%;transform:translateZ(-55px) rotateY(-13deg) rotateZ(3deg)}
+.plane-detail{width:29%;aspect-ratio:1;left:-15%;bottom:7%;transform:translateZ(52px) rotateY(12deg) rotateZ(-4deg)}
+.spatial-object:not(.is-active) .spatial-secondary{opacity:.2}
+.spatial-object.is-active .spatial-main-plane{filter:drop-shadow(0 42px 42px rgba(48,38,27,.22))}
+.spatial-object:focus-visible .spatial-main-plane{outline:1px solid #342d26;outline-offset:10px}
+.spatial-horizon{position:absolute;left:10%;right:10%;top:57%;height:1px;background:linear-gradient(90deg,transparent,rgba(78,66,53,.12),transparent);transform:translateZ(-900px);z-index:0}
+.spatial-instruction{position:absolute;bottom:4vh;left:50%;transform:translateX(-50%);margin:0;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#746b61;white-space:nowrap;z-index:5}
+.spatial-instruction:before{content:"";display:inline-block;width:28px;height:1px;background:currentColor;vertical-align:middle;margin-right:10px;opacity:.5}
+
+@media(max-width:1024px){
+  .collections-story{height:680vh}
+  .collections-story-stage{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) auto}
+  .collections-story-intro{position:absolute;left:0;top:0;width:44%;padding:100px 4vw 0;z-index:6}
+  .collections-story-intro p{display:none}
+  .collections-story-intro h2{font-size:clamp(38px,6vw,60px)}
+  .collections-story-viewer{grid-row:1/4}
+  .collections-story-sidebar{position:absolute;right:0;bottom:2vh;width:38%;padding:20px 4vw;z-index:6;background:linear-gradient(90deg,transparent,rgba(244,239,231,.82) 18%)}
+  .story-meta p,.story-specs{display:none}
+  .story-detail-strip{margin-bottom:12px}
+  .spatial-object{width:min(48vw,450px);height:min(62vh,650px)}
+}
+@media(max-width:700px){
+  .collections-story{height:720vh}
+  .collections-story-stage{display:block;height:100svh}
+  .collections-story-intro{width:100%;padding:84px 6vw 0;pointer-events:none}
+  .collections-story-intro h2{font-size:38px;margin:10px 0 0}
+  .story-counter{margin-top:10px}
+  .collections-story-viewer{position:absolute;inset:0;perspective:1300px;overflow:hidden}
+  .spatial-object{width:68vw;height:52svh;top:49%}
+  .plane-installed{width:34%;right:-10%;top:1%}
+  .plane-detail{width:27%;left:-8%;bottom:3%}
+  .collections-story-sidebar{left:0;right:0;bottom:0;width:100%;padding:14px 6vw 24px;background:linear-gradient(0deg,#f1ece3 55%,transparent)}
+  .story-meta h3{font-size:31px;margin:8px 0 4px}
+  .story-detail-strip,.story-view-button,.story-meta p,.story-specs{display:none}
+  .spatial-instruction{bottom:20vh}
+}
+@media(prefers-reduced-motion:reduce){
+  .spatial-object{transition:none}
+}
+
