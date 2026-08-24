@@ -61,16 +61,18 @@
         <div class="depth-model-shell">
           <model-viewer
             id="lotusModel"
-            src="assets/images/lotus_bloom_web.glb"
+            src="assets/images/lotus_bloom_object.glb"
             poster="assets/images/lb2.1.png"
             alt="Lotus Bloom 3D object"
             camera-controls
             interaction-prompt="none"
-            shadow-intensity="0.9"
-            shadow-softness="0.75"
-            exposure="1.08"
+            shadow-intensity="0.72"
+            shadow-softness="0.95"
+            exposure="0.92"
             environment-image="neutral"
-            camera-orbit="-22deg 76deg 2.8m"
+            camera-orbit="-22deg 76deg 4.25m"
+            min-camera-orbit="auto auto 1m"
+            max-camera-orbit="auto auto 10m"
             field-of-view="28deg"
             disable-zoom>
             <img slot="poster" class="depth-model-poster" src="assets/images/lb2.1.png" alt="Lotus Bloom">
@@ -134,4 +136,3 @@
 <script src="assets/js/depth-showcase.js"></script>
 </body>
 </html>
-

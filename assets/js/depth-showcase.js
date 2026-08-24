@@ -21,9 +21,9 @@
     const reveal=clamp((p-.58)/.18);
     const orbit=-24+(p*205)+(pointerX*8);
     const polar=78-(Math.sin(p*Math.PI)*12)+(pointerY*5);
-    const radius=2.95-(Math.sin(p*Math.PI)*.48);
+    const radius=4.25-(Math.sin(p*Math.PI)*.28);
     stage.style.setProperty("--lotus-progress",p.toFixed(4));
-    stage.style.setProperty("--lotus-scale",(0.8+Math.sin(p*Math.PI)*.22+p*.1).toFixed(4));
+    stage.style.setProperty("--lotus-scale",(0.72+Math.sin(p*Math.PI)*.14+p*.05).toFixed(4));
     stage.style.setProperty("--lotus-lift",`${(-4+Math.sin(p*Math.PI*2)*3).toFixed(2)}vh`);
     stage.style.setProperty("--lotus-roll",`${(-3+p*6+pointerX*1.5).toFixed(2)}deg`);
     stage.style.setProperty("--lotus-x",`${(pointerX*12).toFixed(2)}px`);
@@ -39,4 +39,3 @@
   model.addEventListener("load",()=>model.classList.add("is-loaded"),{once:true});
   readScroll();
 })();
-
