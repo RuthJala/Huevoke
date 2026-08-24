@@ -1,40 +1,42 @@
 (() => {
   "use strict";
-  const $=(s,r=document)=>r.querySelector(s);
-  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-  const section=$("#depthShowcase");
-  const cf=$("#depthCF");
-  const lotus=$("#depthLotus");
-  const bar=$("#depthProgressBar");
-  const cfModel=$("#cfModel");
-  const lotusModel=$("#lotusModel");
-  if(!section) return;
-
-  let px=0,py=0,targetX=0,targetY=0;
+  const section=document.querySelector("#depthShowcase");
+  const stage=document.querySelector("#depthStage");
+  const model=document.querySelector("#lotusModel");
+  if(!section||!stage||!model) return;
+  const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function update(){
-    const r=section.getBoundingClientRect();
-    const visible=clamp((innerHeight-r.top)/(innerHeight+r.height),0,1);
-    if(bar) bar.style.width=(visible*100)+"%";
-
-    px+=(targetX-px)*.065;
-    py+=(targetY-py)*.065;
-
-    if(!reduced){
-      if(cf) cf.style.transform=`translate3d(${px*10}px,${(-4+visible*7)+py*5}vh,0) rotate(${(-1.2+visible*2.4)+px*.45}deg)`;
-      if(lotus) lotus.style.transform=`translate3d(${px*-8}px,${(5-visible*8)+py*-4}vh,0) rotate(${(1.1-visible*2.1)-px*.35}deg)`;
-      if(cfModel) cfModel.setAttribute("camera-orbit",`${-18+visible*34+px*5}deg ${78+py*2}deg 2.9m`);
-      if(lotusModel) lotusModel.setAttribute("camera-orbit",`${20-visible*38-px*4}deg ${76-py*2}deg 3m`);
-    }
-    requestAnimationFrame(update);
+  let current=0,target=0,pointerX=0,pointerY=0,targetX=0,targetY=0,raf=0;
+  function readScroll(){
+    const rect=section.getBoundingClientRect();
+    target=clamp(-rect.top/Math.max(1,rect.height-innerHeight));
+    if(!raf) raf=requestAnimationFrame(render);
   }
-
-  section.addEventListener("pointermove",e=>{
-    const r=section.getBoundingClientRect();
-    targetX=clamp((e.clientX-r.left)/Math.max(1,r.width),0,1)*2-1;
-    targetY=clamp((e.clientY-r.top)/Math.max(1,r.height),0,1)*2-1;
-  });
-  section.addEventListener("pointerleave",()=>{targetX=0;targetY=0});
-  requestAnimationFrame(update);
+  function render(){
+    raf=0;
+    current+=(target-current)*.075;
+    pointerX+=(targetX-pointerX)*.06;
+    pointerY+=(targetY-pointerY)*.06;
+    const p=reduced?0.56:current;
+    const reveal=clamp((p-.58)/.18);
+    const orbit=-24+(p*205)+(pointerX*8);
+    const polar=78-(Math.sin(p*Math.PI)*12)+(pointerY*5);
+    const radius=2.95-(Math.sin(p*Math.PI)*.48);
+    stage.style.setProperty("--lotus-progress",p.toFixed(4));
+    stage.style.setProperty("--lotus-scale",(0.8+Math.sin(p*Math.PI)*.22+p*.1).toFixed(4));
+    stage.style.setProperty("--lotus-lift",`${(-4+Math.sin(p*Math.PI*2)*3).toFixed(2)}vh`);
+    stage.style.setProperty("--lotus-roll",`${(-3+p*6+pointerX*1.5).toFixed(2)}deg`);
+    stage.style.setProperty("--lotus-x",`${(pointerX*12).toFixed(2)}px`);
+    stage.style.setProperty("--lotus-y",`${(pointerY*9).toFixed(2)}px`);
+    stage.style.setProperty("--lotus-copy",reveal.toFixed(3));
+    model.setAttribute("camera-orbit",`${orbit.toFixed(2)}deg ${polar.toFixed(2)}deg ${radius.toFixed(3)}m`);
+    if(Math.abs(target-current)>.0005||Math.abs(targetX-pointerX)>.002||Math.abs(targetY-pointerY)>.002) raf=requestAnimationFrame(render);
+  }
+  stage.addEventListener("pointermove",e=>{const r=stage.getBoundingClientRect();targetX=((e.clientX-r.left)/r.width-.5)*2;targetY=((e.clientY-r.top)/r.height-.5)*2;if(!raf)raf=requestAnimationFrame(render)});
+  stage.addEventListener("pointerleave",()=>{targetX=0;targetY=0;if(!raf)raf=requestAnimationFrame(render)});
+  addEventListener("scroll",readScroll,{passive:true});
+  addEventListener("resize",readScroll,{passive:true});
+  model.addEventListener("load",()=>model.classList.add("is-loaded"),{once:true});
+  readScroll();
 })();
+

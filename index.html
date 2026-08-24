@@ -50,80 +50,40 @@
     <div class="scroll-cue">Scroll to explore</div>
   </section>
 
-  <!-- TRUE 3D HERO OBJECTS -->
-  <section class="depth-showcase" id="depthShowcase" aria-label="HUEVOKE objects in 3D">
+  <!-- LOTUS BLOOM 3D STORY -->
+  <section class="depth-showcase" id="depthShowcase" aria-label="Lotus Bloom in 3D">
     <div class="depth-stage" id="depthStage">
-      <div class="depth-backdrop-word depth-backdrop-form" aria-hidden="true">FORM</div>
-      <div class="depth-backdrop-word depth-backdrop-elements" aria-hidden="true">ELEMENTS</div>
-
-      <aside class="depth-copy">
-        <div class="eyebrow">HUEVOKE / IN DEPTH</div>
-        <h2>Sculpted<br><em>in motion.</em></h2>
-        <p>Two signature objects shown as real 3D forms — rotate them, drag them and watch their depth shift as the page moves.</p>
-        <a class="depth-collection-link" href="collections.html">Explore all collections →</a>
-      </aside>
-
-      <article class="depth-object depth-object-cf" id="depthCF">
+      <div class="depth-atmosphere" aria-hidden="true"></div>
+      <div class="depth-type" aria-hidden="true"><span>LOTUS</span><span>BLOOM</span></div>
+      <div class="depth-index depth-index-left" aria-hidden="true">HUEVOKE<br>ELEMENTS / 02</div>
+      <div class="depth-index depth-index-right" aria-hidden="true">SCULPTED<br>WALL OBJECT</div>
+      <article class="depth-object depth-object-lotus" id="depthLotus">
         <div class="depth-model-shell">
           <model-viewer
-            id="cfModel"
-            src="assets/models/cf1.glb"
-            poster="assets/images/cf1.2.webp"
-            alt="Contour Flow I 3D object"
-            camera-controls
-            auto-rotate
-            auto-rotate-delay="0"
-            rotation-per-second="8deg"
-            interaction-prompt="none"
-            shadow-intensity="0.65"
-            shadow-softness="0.9"
-            exposure="1.02"
-            environment-image="neutral"
-            camera-orbit="-12deg 78deg 2.9m"
-            field-of-view="31deg"
-            disable-zoom>
-            <img slot="poster" class="depth-model-poster" src="assets/images/cf1.2.webp" alt="Contour Flow I">
-          </model-viewer>
-        </div>
-        <div class="depth-object-meta">
-          <span class="eyebrow">FORM / 01</span>
-          <h3>Contour Flow I</h3>
-          <a href="product.html?slug=contour-flow-01">View object →</a>
-        </div>
-      </article>
-
-      <article class="depth-object depth-object-lotus" id="depthLotus">
-        <div class="depth-model-shell depth-model-shell-round">
-          <model-viewer
             id="lotusModel"
-            src="assets/models/lotus-bloom.glb"
+            src="assets/images/lotus_bloom_web.glb"
             poster="assets/images/lb2.1.png"
             alt="Lotus Bloom 3D object"
             camera-controls
-            auto-rotate
-            auto-rotate-delay="0"
-            rotation-per-second="7deg"
             interaction-prompt="none"
-            shadow-intensity="0.6"
-            shadow-softness="0.9"
-            exposure="1.02"
+            shadow-intensity="0.9"
+            shadow-softness="0.75"
+            exposure="1.08"
             environment-image="neutral"
-            camera-orbit="16deg 76deg 3m"
-            field-of-view="31deg"
+            camera-orbit="-22deg 76deg 2.8m"
+            field-of-view="28deg"
             disable-zoom>
             <img slot="poster" class="depth-model-poster" src="assets/images/lb2.1.png" alt="Lotus Bloom">
           </model-viewer>
         </div>
-        <div class="depth-object-meta">
-          <span class="eyebrow">ELEMENTS / 02</span>
-          <h3>Lotus Bloom</h3>
-          <a href="product.html?slug=lotus-bloom">View object →</a>
-        </div>
       </article>
-
-      <div class="depth-progress" aria-hidden="true">
-        <span>01</span><i><b id="depthProgressBar"></b></i><span>02</span>
+      <div class="depth-copy" id="depthCopy">
+        <div class="eyebrow">HUEVOKE / LOTUS BLOOM</div>
+        <h2>Formed by<br><em>light and depth.</em></h2>
+        <p>A sculpted wall object that opens like a quiet bloom. Scroll to turn the form; drag to inspect it from your own angle.</p>
+        <a class="depth-collection-link" href="product.html?slug=lotus-bloom">View Lotus Bloom →</a>
       </div>
+      <div class="depth-progress" aria-hidden="true"><i><b id="depthProgressBar"></b></i><span>SCROLL TO ORBIT</span></div>
     </div>
   </section>
 
@@ -174,3 +134,4 @@
 <script src="assets/js/depth-showcase.js"></script>
 </body>
 </html>
+
