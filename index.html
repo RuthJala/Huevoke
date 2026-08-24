@@ -11,7 +11,6 @@
   <link rel="preload" as="image" href="assets/images/cf1.3.webp">
   <link rel="preload" as="image" href="assets/images/cf1.5.webp">
   <link rel="preload" as="image" href="assets/images/lb1.3.webp">
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/depth-showcase.css">
 </head>
@@ -59,21 +58,9 @@
       <div class="depth-index depth-index-right" aria-hidden="true">SCULPTED<br>WALL OBJECT</div>
       <article class="depth-object depth-object-lotus" id="depthLotus">
         <div class="depth-model-shell">
-          <model-viewer
-            id="lotusModel"
-            src="assets/images/lotus_bloom_object.glb"
-            alt="Lotus Bloom 3D object"
-            camera-controls
-            interaction-prompt="none"
-            shadow-intensity="0.72"
-            shadow-softness="0.95"
-            exposure="0.92"
-            environment-image="neutral"
-            camera-orbit="-22deg 76deg 4.25m"
-            min-camera-orbit="auto auto 1m"
-            max-camera-orbit="auto auto 10m"
-            field-of-view="28deg"
-            disable-zoom></model-viewer>
+          <div id="lotusModel" class="lotus-webgl" role="img" aria-label="Lotus Bloom 3D object">
+            <span class="lotus-loader">Loading object</span>
+          </div>
         </div>
       </article>
       <div class="depth-copy" id="depthCopy">
@@ -130,7 +117,10 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/depth-showcase.js"></script>
+<script type="importmap">
+  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
+<script type="module" src="assets/js/depth-showcase.js"></script>
 </body>
 </html>
 
