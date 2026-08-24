@@ -16,7 +16,7 @@
 
   function renderGallery(){
     document.title="Collections — HUEVOKE";
-    app.innerHTML=`<section class="gallery-intro"><div class="eyebrow">HUEVOKE / COLLECTIONS</div><h1>An exhibition<br><em>of form.</em></h1><p>Move through seven sculptural studies. Each work opens into its complete collection.</p><div class="gallery-scroll-cue"><i></i><span>Scroll to enter</span></div></section><section class="gallery-walk" aria-label="HUEVOKE collections"><div class="gallery-architecture" aria-hidden="true"><span class="gallery-ceiling"></span><span class="gallery-floor"></span><span class="gallery-horizon"></span></div>${collections.map((item,index)=>`<article class="gallery-stop" data-index="${index}"><div class="gallery-stop-stage"><div class="gallery-wall-number">${item.number}</div><div class="gallery-wall-copy"><span>Collection ${item.number} / 07</span><h2>${item.title}</h2><p>${item.note}</p></div><a class="gallery-frame" href="collections.html?series=${item.id}" aria-label="View ${item.title}"><span class="gallery-frame-mount"><img src="${imagePath(item.image)}" alt="${item.title}" ${index>1?'loading="lazy"':''}></span><span class="gallery-plaque"><b>${item.title}</b><small>View collection &nbsp;↗</small></span></a><div class="gallery-position"><b>${String(index+1).padStart(2,"0")}</b><span></span><small>07</small></div></div></article>`).join("")}</section>`;
+    app.innerHTML=`<section class="gallery-intro"><div class="gallery-intro-copy"><div class="eyebrow">HUEVOKE / COLLECTIONS</div><h1>An exhibition<br><em>of form.</em></h1><p>Move through seven sculptural studies. Each work opens into its complete collection.</p><div class="gallery-scroll-cue"><i></i><span>Scroll to enter</span></div></div><figure class="gallery-intro-image"><img src="assets/images/cf2.2-hero.png" alt="Contour Flow II in a quiet interior"></figure></section><section class="gallery-walk" aria-label="HUEVOKE collections"><div class="gallery-lock"><div class="gallery-architecture" aria-hidden="true"><span class="gallery-ceiling"></span><span class="gallery-floor"></span><span class="gallery-horizon"></span></div><div class="gallery-scenes">${collections.map((item,index)=>`<article class="gallery-stop" data-index="${index}"><div class="gallery-wall-number">${item.number}</div><div class="gallery-wall-copy"><span>Collection ${item.number} / 07</span><h2>${item.title}</h2><p>${item.note}</p></div><a class="gallery-frame" href="collections.html?series=${item.id}" aria-label="View ${item.title}"><span class="gallery-frame-mount"><img src="${imagePath(item.image)}" alt="${item.title}" ${index>1?'loading="lazy"':''}></span><span class="gallery-plaque"><b>${item.title}</b><small>View collection &nbsp;↗</small></span></a></article>`).join("")}</div><div class="gallery-position"><b>01</b><span><i></i></span><small>07</small></div><div class="gallery-lock-cue">Scroll to move through the exhibition</div></div></section>`;
     bindGalleryMotion();
   }
 
@@ -29,9 +29,29 @@
   function bindGalleryMotion(){
     const stops=[...document.querySelectorAll(".gallery-stop")];
     if(!stops.length)return;
+    const walk=document.querySelector(".gallery-walk");
+    const counter=document.querySelector(".gallery-position b");
+    const progressLine=document.querySelector(".gallery-position i");
     const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf=0;
-    const draw=()=>{raf=0;const center=innerHeight*.52;stops.forEach(stop=>{const rect=stop.getBoundingClientRect();const distance=(rect.top+rect.height*.5-center)/innerHeight;const closeness=Math.max(0,1-Math.abs(distance));stop.style.setProperty("--distance",distance.toFixed(4));stop.style.setProperty("--close",closeness.toFixed(4));stop.classList.toggle("is-current",Math.abs(distance)<.5);});};
+    const draw=()=>{
+      raf=0;
+      const rect=walk.getBoundingClientRect();
+      const travel=Math.max(1,walk.offsetHeight-innerHeight);
+      const progress=Math.max(0,Math.min(1,-rect.top/travel));
+      const position=progress*(stops.length-1);
+      const active=Math.max(0,Math.min(stops.length-1,Math.round(position)));
+      stops.forEach((stop,index)=>{
+        const distance=index-position;
+        const closeness=Math.max(0,1-Math.abs(distance));
+        stop.style.setProperty("--distance",distance.toFixed(4));
+        stop.style.setProperty("--close",closeness.toFixed(4));
+        stop.classList.toggle("is-current",index===active);
+        stop.setAttribute("aria-hidden",Math.abs(distance)>.72?"true":"false");
+      });
+      if(counter)counter.textContent=String(active+1).padStart(2,"0");
+      if(progressLine)progressLine.style.transform=`scaleX(${progress})`;
+    };
     const update=()=>{if(!raf)raf=requestAnimationFrame(draw);};
     if(!reduced)addEventListener("scroll",update,{passive:true});
     addEventListener("resize",update,{passive:true});draw();
