@@ -3,11 +3,11 @@
   const collections = [
     {id:"contour-flow",number:"01",title:"Contour Flow",image:"cf2.5.webp",note:"Rhythm drawn through layered contours.",products:[["contour-flow-01","Contour Flow I","HV-F01 CF","cf1.2.webp"],["contour-flow-02","Contour Flow II","HV-F02 CF","cf2.2.webp"],["contour-flow-03","Contour Flow III","HV-F03 CF","cf3.2.webp"]]},
     {id:"erosion",number:"02",title:"Erosion",image:"e2.4.webp",note:"Forms softened by time and elemental wear.",products:[["erosion-01","Erosion I","HV-F04 ER","e1.2.webp"],["erosion-02","Erosion II","HV-F05 ER","e2.2.webp"]]},
-    {id:"fluid-motion",number:"03",title:"Fluid Motion",image:"fm1.5.webp",note:"Layered movement held in a quiet surface.",products:[["fluid-motion-01","Fluid Motion I","HV-F06 FM","fm1.2.webp"],["fluid-motion-02","Fluid Motion II","HV-F07 FM","fm2.2.webp"]]},
+    {id:"fluid-motion",number:"03",title:"Fluid Motion",image:"fm1.2.webp",note:"Layered movement held in a quiet surface.",products:[["fluid-motion-01","Fluid Motion I","HV-F06 FM","fm1.2.webp"],["fluid-motion-02","Fluid Motion II","HV-F07 FM","fm2.2.webp"]]},
     {id:"balance",number:"04",title:"Balance",image:"b3.5.webp",note:"Weight, void and asymmetry in equilibrium.",products:[["balance-01","Balance I","HV-F08 BL","b1.2.webp"],["balance-02","Balance II","HV-F09 BL","b2.2.webp"],["balance-03","Balance III","HV-F10 BL","b3.2.webp"]]},
-    {id:"tidal-landscape",number:"05",title:"Tidal Landscape",image:"tl1.5.webp",note:"Topographies shaped by imagined tides.",products:[["tidal-landscape-01","Tidal Landscape I","HV-F11 TL","tl1.2.webp"],["tidal-landscape-02","Tidal Landscape II","HV-F12 TL","tl2.2.webp"]]},
+    {id:"tidal-landscape",number:"05",title:"Tidal Landscape",image:"tl3.3.png",note:"Topographies shaped by imagined tides.",products:[["tidal-landscape-01","Tidal Landscape I","HV-F11 TL","tl1.2.webp"],["tidal-landscape-02","Tidal Landscape II","HV-F12 TL","tl2.2.webp"]]},
     {id:"lotus-bloom",number:"06",title:"Lotus Bloom",image:"lb1.4.webp",note:"A flower translated into sculptural depth.",products:[["lotus-bloom","Lotus Bloom","HV-E01 LB","lb1.4.webp"]]},
-    {id:"eclipse",number:"07",title:"Eclipse",image:"ec1.4.png",note:"Celestial alignment distilled into form.",products:[["eclipse","Eclipse","HV-E02 EC","ec1.4.png"]]}
+    {id:"eclipse",number:"07",title:"Eclipse",image:"ec2.3.png",note:"Celestial alignment distilled into form.",products:[["eclipse","Eclipse","HV-E02 EC","ec2.3.png"]]}
   ];
   const app=document.querySelector("#collectionsApp");
   const selected=new URLSearchParams(location.search).get("series");

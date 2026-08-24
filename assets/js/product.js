@@ -25,7 +25,7 @@ p.sizes.forEach((s,i)=>{
 });
 function updateWA(){
  const msg=`Hi HUEVOKE, I'm interested in ${p.name} — ${p.code}. I'd like to enquire/order the ${selected} size. Please share availability, customisation and ordering details.`;
- $("#wa-link").href=`https://wa.me/919353417406?text=${encodeURIComponent(msg)}`;
+  $("#wa-link").href=`https://wa.me/917288952705?text=${encodeURIComponent(msg)}`;
 }
 updateWA();
 
@@ -33,3 +33,4 @@ const gallery=$("#gallery");
 if(p.imgs&&p.imgs.length>1){
  p.imgs.slice(1).forEach((src,i)=>{const f=document.createElement("figure");f.innerHTML=`<img loading="lazy" src="${src}" alt="${p.name} view ${i+2}">`;gallery.appendChild(f)});
 }else gallery.style.display="none";
+

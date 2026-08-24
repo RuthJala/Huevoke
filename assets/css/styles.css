@@ -2421,4 +2421,18 @@ html:has(body.collections-gallery-page),body.collections-gallery-page{overflow-x
 }
 @media(prefers-reduced-motion:reduce){.gallery-lock .gallery-frame{filter:none}}
 
+/* Collections V13 — complete, uncropped artwork and readable footer */
+.collections-gallery-page .collections-footer,
+.collections-gallery-page .collections-footer a,
+.collections-gallery-page .collections-footer span,
+.collections-gallery-page .collections-footer .footer-mark,
+.collections-gallery-page .collections-footer .footer-base{color:#171411!important}
+.collections-gallery-page .collections-footer{border-color:rgba(23,20,17,.16)}
+.collections-gallery-page .gallery-intro-image{display:grid;place-items:center;background:#f8f5ef}
+.collections-gallery-page .gallery-intro-image img{object-fit:contain;object-position:center}
+.collections-gallery-page .gallery-frame-mount{background:#f8f5ef}
+.collections-gallery-page .gallery-frame img{object-fit:contain;object-position:center;background:#f8f5ef}
+.collections-gallery-page .collection-detail-cover{background:#f8f5ef}
+.collections-gallery-page .collection-detail-cover img{object-fit:contain;object-position:center;background:#f8f5ef}
+
 
