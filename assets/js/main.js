@@ -53,4 +53,23 @@
     addEventListener("scroll",heroMotion,{passive:true});
     heroMotion();
   }
+
+  document.body.insertAdjacentHTML("beforeend",`<a class="global-cart" href="cart.html" aria-label="View cart">Cart <span data-cart-count>0</span></a>`);
+  const cartCount=()=>{
+    const cart=JSON.parse(localStorage.getItem("huevoke-cart")||"[]");
+    const count=cart.reduce((sum,item)=>sum+(item.qty||1),0);
+    $$('[data-cart-count]').forEach(el=>el.textContent=count);
+  };
+  cartCount();
+  addEventListener("huevoke-cart-updated",cartCount);
+
+  document.body.insertAdjacentHTML("beforeend",`<div class="enquiry-modal" aria-hidden="true"><button class="enquiry-backdrop" type="button" aria-label="Close enquiry"></button><section class="enquiry-panel" role="dialog" aria-modal="true" aria-labelledby="enquiry-title"><button class="enquiry-close" type="button" aria-label="Close">×</button><div class="eyebrow">HUEVOKE / PRIVATE ENQUIRY</div><h2 id="enquiry-title">Let’s discuss<br>your space.</h2><p>Share a few details and the HUEVOKE studio will respond personally.</p><form action="https://formsubmit.co/huevoke.decor@gmail.com" method="POST"><input type="hidden" name="_subject" value="New HUEVOKE website enquiry"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_template" value="table"><label>Name<input name="name" autocomplete="name" required></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Phone<input type="tel" name="phone" autocomplete="tel" required></label><label>Interested in<input name="interest" placeholder="Object, collection or bespoke piece"></label><label>Message<textarea name="message" rows="4" required></textarea></label><label class="enquiry-consent"><input type="checkbox" required><span>I agree to be contacted about this enquiry.</span></label><button class="btn fill" type="submit">Send enquiry</button></form><small>We use these details only to respond to your request.</small></section></div>`);
+  const modal=$(".enquiry-modal");
+  const openEnquiry=()=>{modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>$("input",modal)?.focus(),80)};
+  const closeEnquiry=()=>{modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open")};
+  $$('.nav-enquire, [data-enquire], a[href*="wa.me"]:not(.footer-contact-link)').forEach(link=>link.addEventListener("click",e=>{e.preventDefault();openEnquiry()}));
+  $(".enquiry-close")?.addEventListener("click",closeEnquiry);
+  $(".enquiry-backdrop")?.addEventListener("click",closeEnquiry);
+  addEventListener("keydown",e=>{if(e.key==="Escape")closeEnquiry()});
 })();
+

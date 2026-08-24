@@ -19,15 +19,27 @@
 <div class="pointer-glow"></div>
 <div class="grain"></div>
 <main>
-<section class="product-hero">
- <div id="product-main-media" class="product-main-media"></div>
- <div class="product-info">
+<section class="commerce-product">
+ <div class="commerce-gallery">
+  <div id="product-thumbs" class="product-thumbs" aria-label="Product views"></div>
+  <div id="product-main-media" class="product-main-media"><button class="gallery-arrow prev" type="button" aria-label="Previous image">←</button><div class="product-main-image"></div><button class="gallery-arrow next" type="button" aria-label="Next image">→</button></div>
+  <div class="swipe-hint">Swipe or use thumbnails to explore</div>
+ </div>
+ <div class="product-info commerce-info">
   <div id="series" class="series"></div><h1 id="product-name"></h1><div id="product-code" class="product-code"></div><p id="product-desc" class="product-desc"></p>
-  <div class="spec-grid"><div class="spec"><small>Thickness</small><strong id="thickness"></strong></div><div class="spec"><small>Material</small><strong id="material"></strong></div><div class="spec"><small>Finish</small><strong id="finish"></strong></div><div class="spec"><small>Mounting</small><strong>Pre-installed</strong></div></div>
-  <div class="eyebrow">SELECT SIZE</div><div id="size-picker" class="size-picker"></div><a id="wa-link" class="btn fill" href="#" target="_blank" rel="noreferrer">Enquire / Order on WhatsApp</a>
+  <div id="product-price" class="product-price"></div><div class="tax-note">Inclusive of taxes · Shipping calculated separately</div>
+  <div class="eyebrow">SELECT SIZE</div><div id="size-picker" class="size-picker"></div>
+  <div class="delivery-note"><strong>Made to order</strong><span>Estimated delivery in 8–12 days</span></div>
+  <div class="product-actions"><button id="add-cart" class="btn fill" type="button">Add to cart</button><button class="btn product-enquire" type="button" data-enquire>Enquire</button></div>
+  <a class="view-cart-link" href="cart.html">View cart <span data-cart-count>0</span></a>
+  <div class="product-accordions">
+   <details open><summary>Specifications</summary><div id="specifications" class="accordion-body"></div></details>
+   <details><summary>Materials & care</summary><div class="accordion-body"><p>Made from premium high-density MDF and finished by hand in an ultra-matte coating. Dust with a clean dry microfibre cloth. Avoid water, abrasives and direct prolonged moisture.</p></div></details>
+   <details><summary>Delivery & installation</summary><div class="accordion-body"><p>Made to order in 8–12 days. A pre-installed French cleat is included. Shipping charges are additional and will be confirmed before dispatch.</p></div></details>
+   <details><summary>Terms</summary><div class="accordion-body"><p>Colours may vary slightly by screen and because each object is hand-finished. Made-to-order pieces cannot be cancelled after production begins. Report transit damage with an unboxing video within 24 hours of delivery.</p></div></details>
+  </div>
  </div>
 </section>
-<section id="gallery" class="product-gallery"></section>
 <section class="product-quote"><div class="eyebrow">HUEVOKE / OBJECT NOTE</div><p>Designed to be noticed slowly — through proportion, light and the shadow held between layers.</p></section>
 </main>
 
@@ -42,7 +54,7 @@
     </div>
     <div>
       <span>Connect</span>
-      <a href="tel:+917288952705" class="footer-contact-link">
+      <a href="https://wa.me/917288952705" target="_blank" rel="noreferrer" class="footer-contact-link">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.47 15.47 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 5a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.24 1z"/></svg>
         <span>+91 72889 52705</span>
       </a>

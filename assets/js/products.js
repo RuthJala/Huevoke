@@ -1,260 +1,33 @@
-window.HUEVOKE_PRODUCTS = [
-  {
-    "slug": "contour-flow-01",
-    "series": "Contour Flow",
-    "name": "Contour Flow I",
-    "code": "HV-F01 CF",
-    "thickness": "40 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/cf1.2.webp",
-      "assets/images/cf1.1.webp",
-      "assets/images/cf1.3.webp",
-      "assets/images/cf1.4.webp",
-      "assets/images/cf1.5.webp"
-    ],
-    "desc": "A restrained composition of broad organic planes. Contour Flow I uses soft neutral relief to create movement through shadow rather than ornament."
-  },
-  {
-    "slug": "contour-flow-02",
-    "series": "Contour Flow",
-    "name": "Contour Flow II",
-    "code": "HV-F02 CF",
-    "thickness": "50 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/cf2.1.webp",
-      "assets/images/cf2.2.webp",
-      "assets/images/cf2.3.webp",
-      "assets/images/cf2.4.webp",
-      "assets/images/cf2.5.webp"
-    ],
-    "desc": "A deeper, more sculpted interpretation of flowing topography. Curved recesses move through the surface with a calm architectural rhythm."
-  },
-  {
-    "slug": "contour-flow-03",
-    "series": "Contour Flow",
-    "name": "Contour Flow III",
-    "code": "HV-F03 CF",
-    "thickness": "50 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/cf3.1.webp",
-      "assets/images/cf3.2.webp",
-      "assets/images/cf3.3.webp",
-      "assets/images/cf3.4.webp",
-      "assets/images/cf3.5.webp"
-    ],
-    "desc": "Linear contours open into a quiet central field, balancing layered relief with generous negative space."
-  },
-  {
-    "slug": "erosion-01",
-    "series": "Erosion",
-    "name": "Erosion I",
-    "code": "HV-F04 ER",
-    "thickness": "50 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/e1.1.webp",
-      "assets/images/e1.2.webp",
-      "assets/images/e1.3.webp",
-      "assets/images/e1.4.webp"
-    ],
-    "desc": "An irregular silhouette shaped as if softened by time. Warm terracotta appears within muted sand tones to create a grounded focal point."
-  },
-  {
-    "slug": "erosion-02",
-    "series": "Erosion",
-    "name": "Erosion II",
-    "code": "HV-F05 ER",
-    "thickness": "40 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/e2.1.webp",
-      "assets/images/e2.2.webp",
-      "assets/images/e2.3.webp",
-      "assets/images/e2.4.webp"
-    ],
-    "desc": "A horizontal erosion study with nested organic cavities and a warm mineral palette, designed for long walls and low furniture compositions."
-  },
-  {
-    "slug": "fluid-motion-01",
-    "series": "Fluid Motion",
-    "name": "Fluid Motion I",
-    "code": "HV-F06 FM",
-    "thickness": "50 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/fm1.1.webp",
-      "assets/images/fm1.2.webp",
-      "assets/images/fm1.3.webp",
-      "assets/images/fm1.4.webp",
-      "assets/images/fm1.5.webp"
-    ],
-    "desc": "A vertical wave of layered colour and relief. Fluid Motion I combines sage, sand and slate tones in one continuous sculptural gesture."
-  },
-  {
-    "slug": "fluid-motion-02",
-    "series": "Fluid Motion",
-    "name": "Fluid Motion II",
-    "code": "HV-F07 FM",
-    "thickness": "50 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/fm2.1.webp",
-      "assets/images/fm2.2.webp",
-      "assets/images/fm2.3.webp",
-      "assets/images/fm2.4.webp"
-    ],
-    "desc": "A freer internal rhythm with deeper blue-grey relief and a soft sage perimeter, designed to feel fluid from every viewing angle."
-  },
-  {
-    "slug": "balance-01",
-    "series": "Balance",
-    "name": "Balance I",
-    "code": "HV-F08 BL",
-    "thickness": "50 mm",
-    "sizes": [
-      "18\" × 18\"",
-      "24\" × 24\"",
-      "36\" × 36\""
-    ],
-    "imgs": [
-      "assets/images/b1.1.webp",
-      "assets/images/b1.2.webp",
-      "assets/images/b1.3.webp",
-      "assets/images/b1.4.webp"
-    ],
-    "desc": "Two contrasting masses held within a circular boundary. Balance I explores symmetry without becoming literal."
-  },
-  {
-    "slug": "balance-02",
-    "series": "Balance",
-    "name": "Balance II",
-    "code": "HV-F09 BL",
-    "thickness": "50 mm",
-    "sizes": [
-      "18\" × 18\"",
-      "24\" × 24\"",
-      "36\" × 36\""
-    ],
-    "imgs": [
-      "assets/images/b2.1.webp",
-      "assets/images/b2.2.webp",
-      "assets/images/b2.3.webp",
-      "assets/images/b2.4.webp",
-      "assets/images/b2.5.webp"
-    ],
-    "desc": "A square composition of soft curves and tonal contrast. Layered planes create a deliberate tension between weight and openness."
-  },
-  {
-    "slug": "balance-03",
-    "series": "Balance",
-    "name": "Balance III",
-    "code": "HV-F10 BL",
-    "thickness": "50 mm",
-    "sizes": [
-      "18\" × 18\"",
-      "24\" × 24\"",
-      "36\" × 36\""
-    ],
-    "imgs": [
-      "assets/images/b3.1.webp",
-      "assets/images/b3.2.webp",
-      "assets/images/b3.3.webp",
-      "assets/images/b3.4.webp",
-      "assets/images/b3.5.webp"
-    ],
-    "desc": "A circular study of three flowing fields. The composition is quiet, graphic and designed to sit comfortably in contemporary interiors."
-  },
-  {
-    "slug": "tidal-landscape-01",
-    "series": "Tidal Landscape",
-    "name": "Tidal Landscape I",
-    "code": "HV-F11 TL",
-    "thickness": "40 mm",
-    "sizes": [
-      "24\" × 36\"",
-      "30\" × 48\""
-    ],
-    "imgs": [
-      "assets/images/tl1.1.webp",
-      "assets/images/tl1.2.webp",
-      "assets/images/tl1.3.webp",
-      "assets/images/tl1.4.webp",
-      "assets/images/tl1.5.webp"
-    ],
-    "desc": "A framed vertical landscape built from layered contours in mineral blue, soft sage and warm sand."
-  },
-  {
-    "slug": "tidal-landscape-02",
-    "series": "Tidal Landscape",
-    "name": "Tidal Landscape II",
-    "code": "HV-F12 TL",
-    "thickness": "40 mm",
-    "sizes": [
-      "36\" × 24\"",
-      "48\" × 30\""
-    ],
-    "imgs": [
-      "assets/images/tl2.1.webp",
-      "assets/images/tl2.2.webp",
-      "assets/images/tl2.3.webp",
-      "assets/images/tl2.4.webp",
-      "assets/images/tl2.5.webp"
-    ],
-    "desc": "A panoramic field of layered landforms and water-like channels, designed as a wide architectural statement."
-  },
-  {
-    "slug": "lotus-bloom",
-    "series": "Elements",
-    "name": "Lotus Bloom",
-    "code": "HV-E01 LB",
-    "thickness": "30 mm",
-    "sizes": [
-      "18\" × 18\"",
-      "24\" × 24\"",
-      "36\" × 36\""
-    ],
-    "imgs": [
-      "assets/images/lotus-01.webp",
-      "assets/images/lotus-02.webp"
-    ],
-    "desc": "A familiar lotus reduced to layered geometry, warm muted colour and sculptural depth."
-  },
-  {
-    "slug": "eclipse",
-    "series": "Elements",
-    "name": "Eclipse",
-    "code": "HV-E02 EC",
-    "thickness": "25 mm",
-    "sizes": [
-      "18\" × 18\"",
-      "24\" × 24\"",
-      "36\" × 36\""
-    ],
-    "imgs": [],
-    "desc": "A quiet circular study of overlap, contrast and shadow. Eclipse will join the Elements collection shortly."
-  }
-];
+(() => {
+  const img=(prefix,n,ext="webp",hero=1)=>[hero,...Array.from({length:n},(_,i)=>i+1).filter(i=>i!==hero)].map(i=>`assets/images/${prefix}.${i}.${ext}`);
+  const rect=[{size:'24" × 36"',price:18500},{size:'30" × 48"',price:27500}];
+  const wide=[{size:'36" × 24"',price:18500},{size:'48" × 30"',price:27500}];
+  const square=[{size:'18" × 18"',price:9500},{size:'24" × 24"',price:14500},{size:'36" × 36"',price:24500}];
+  const specs=(thickness,orientation="Vertical")=>({
+    thickness,material:"Premium high-density MDF",finish:"Hand-finished silky ultra-matte",mounting:"Pre-installed French cleat",orientation,care:"Dust gently with a clean, dry microfibre cloth",leadTime:"8–12 days"
+  });
+  const make=(slug,series,name,code,prefix,count,hero,sizes,thickness,desc,ext="webp",orientation="Vertical")=>({slug,series,name,code,imgs:img(prefix,count,ext,hero),sizes,desc,specs:specs(thickness,orientation)});
+
+  window.HUEVOKE_PRODUCTS=[
+    make("contour-flow-01","Contour Flow","Contour Flow I","HV-F01 CF","cf1",5,1,rect,"40 mm","Broad organic planes create movement through measured relief and shadow."),
+    make("contour-flow-02","Contour Flow","Contour Flow II","HV-F02 CF","cf2",5,1,rect,"50 mm","Deep curved recesses move across the surface with a calm architectural rhythm."),
+    make("contour-flow-03","Contour Flow","Contour Flow III","HV-F03 CF","cf3",5,1,rect,"50 mm","Linear contours open into a quiet central field with generous negative space."),
+    make("erosion-01","Erosion","Erosion I","HV-F04 ER","e1",4,2,rect,"50 mm","An irregular silhouette softened by time, grounded in warm mineral tones."),
+    make("erosion-02","Erosion","Erosion II","HV-F05 ER","e2",4,2,rect,"40 mm","Nested organic cavities form a composed study of erosion and depth."),
+    make("fluid-motion-01","Fluid Motion","Fluid Motion I","HV-F06 FM","fm1",5,2,rect,"50 mm","Sage, sand and slate layers flow through one continuous sculptural gesture."),
+    make("fluid-motion-02","Fluid Motion","Fluid Motion II","HV-F07 FM","fm2",4,2,rect,"50 mm","A freer internal rhythm with deeper blue-grey relief and a soft perimeter."),
+    make("balance-01","Balance","Balance I","HV-F08 BL","b1",4,2,square,"50 mm","Contrasting masses held in a circular boundary explore balance without literal symmetry.","webp","Square"),
+    make("balance-02","Balance","Balance II","HV-F09 BL","b2",5,2,square,"50 mm","Soft curves and tonal contrast create tension between visual weight and openness.","webp","Square"),
+    make("balance-03","Balance","Balance III","HV-F10 BL","b3",5,2,square,"50 mm","Three flowing fields form a quiet graphic composition for contemporary interiors.","webp","Square"),
+    make("tidal-landscape-01","Tidal Landscape","Tidal Landscape I","HV-F11 TL","tl1",5,2,wide,"40 mm","Layered contours in mineral blue, sage and warm sand become a wide sculptural terrain.","webp","Landscape"),
+    make("tidal-landscape-02","Tidal Landscape","Tidal Landscape II","HV-F12 TL","tl2",5,2,wide,"40 mm","A panoramic field of landforms and water-like channels for long architectural walls.","webp","Landscape"),
+    make("tidal-landscape-03","Tidal Landscape","Tidal Landscape III","HV-F13 TL","tl3",4,1,wide,"45 mm","Macro topographies sweep across a broad horizontal composition with softened relief.","png","Landscape"),
+    {...make("lotus-bloom-01","Lotus Bloom","Lotus Bloom I","HV-E01 LB","lb1",1,1,square,"30 mm","The lotus reduced to warm layered geometry and sculptural depth.","png","Square"),imgs:["assets/images/lb1.1.png","assets/images/lb1.2.webp","assets/images/lb1.3.webp","assets/images/lb1.4.webp","assets/images/lb1.5.webp"]},
+    make("lotus-bloom-02","Lotus Bloom","Lotus Bloom II","HV-E02 LB","lb2",5,1,square,"35 mm","An expanded floral rhythm with deeper petals and gentle tonal contrast.","png","Square"),
+    make("lotus-bloom-03","Lotus Bloom","Lotus Bloom III","HV-E03 LB","lb3",4,1,square,"35 mm","A quieter lotus study shaped through overlapping petals and balanced voids.","png","Square"),
+    make("eclipse-01","Eclipse","Eclipse I","HV-E04 EC","ec1",4,1,square,"30 mm","Overlapping circular planes hold contrast, shadow and a measured sense of orbit.","png","Square"),
+    make("eclipse-02","Eclipse","Eclipse II","HV-E05 EC","ec2",4,1,square,"35 mm","A deeper celestial study with layered arcs and a warm illuminated centre.","png","Square"),
+    make("eclipse-03","Eclipse","Eclipse III","HV-E06 EC","ec3",4,1,square,"35 mm","Concentric movement and asymmetrical overlap create a calm graphic focal point.","png","Square")
+  ];
+})();
+

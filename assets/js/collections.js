@@ -5,9 +5,9 @@
     {id:"erosion",number:"02",title:"Erosion",image:"e2.4.webp",note:"Forms softened by time and elemental wear.",products:[["erosion-01","Erosion I","HV-F04 ER","e1.2.webp"],["erosion-02","Erosion II","HV-F05 ER","e2.2.webp"]]},
     {id:"fluid-motion",number:"03",title:"Fluid Motion",image:"fm1.2.webp",note:"Layered movement held in a quiet surface.",products:[["fluid-motion-01","Fluid Motion I","HV-F06 FM","fm1.2.webp"],["fluid-motion-02","Fluid Motion II","HV-F07 FM","fm2.2.webp"]]},
     {id:"balance",number:"04",title:"Balance",image:"b3.5.webp",note:"Weight, void and asymmetry in equilibrium.",products:[["balance-01","Balance I","HV-F08 BL","b1.2.webp"],["balance-02","Balance II","HV-F09 BL","b2.2.webp"],["balance-03","Balance III","HV-F10 BL","b3.2.webp"]]},
-    {id:"tidal-landscape",number:"05",title:"Tidal Landscape",image:"tl3.3.png",note:"Topographies shaped by imagined tides.",products:[["tidal-landscape-01","Tidal Landscape I","HV-F11 TL","tl1.2.webp"],["tidal-landscape-02","Tidal Landscape II","HV-F12 TL","tl2.2.webp"]]},
-    {id:"lotus-bloom",number:"06",title:"Lotus Bloom",image:"lb1.4.webp",note:"A flower translated into sculptural depth.",products:[["lotus-bloom","Lotus Bloom","HV-E01 LB","lb1.4.webp"]]},
-    {id:"eclipse",number:"07",title:"Eclipse",image:"ec2.3.png",note:"Celestial alignment distilled into form.",products:[["eclipse","Eclipse","HV-E02 EC","ec2.3.png"]]}
+    {id:"tidal-landscape",number:"05",title:"Tidal Landscape",image:"tl3.3.png",note:"Topographies shaped by imagined tides.",products:[["tidal-landscape-01","Tidal Landscape I","HV-F11 TL","tl1.2.webp"],["tidal-landscape-02","Tidal Landscape II","HV-F12 TL","tl2.2.webp"],["tidal-landscape-03","Tidal Landscape III","HV-F13 TL","tl3.1.png"]]},
+    {id:"lotus-bloom",number:"06",title:"Lotus Bloom",image:"lb1.4.webp",note:"A flower translated into sculptural depth.",products:[["lotus-bloom-01","Lotus Bloom I","HV-E01 LB","lb1.1.png"],["lotus-bloom-02","Lotus Bloom II","HV-E02 LB","lb2.1.png"],["lotus-bloom-03","Lotus Bloom III","HV-E03 LB","lb3.1.png"]]},
+    {id:"eclipse",number:"07",title:"Eclipse",image:"ec2.3.png",note:"Celestial alignment distilled into form.",products:[["eclipse-01","Eclipse I","HV-E04 EC","ec1.1.png"],["eclipse-02","Eclipse II","HV-E05 EC","ec2.1.png"],["eclipse-03","Eclipse III","HV-E06 EC","ec3.1.png"]]}
   ];
   const app=document.querySelector("#collectionsApp");
   const selected=new URLSearchParams(location.search).get("series");
