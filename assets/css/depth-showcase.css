@@ -8,9 +8,8 @@ html:has(body.home-v5),body.home-v5{overflow-x:clip}
 .depth-type span:first-child{align-self:flex-start;margin-left:-.5vw}.depth-type span:last-child{align-self:flex-end;margin-right:-1vw;color:rgba(255,255,255,.72)}
 .depth-object{position:absolute;z-index:4;inset:0;display:grid;place-items:center;pointer-events:none;transform:translate3d(var(--lotus-x,0),var(--lotus-lift,0),0) scale(var(--lotus-scale,1));will-change:transform}
 .depth-model-shell{width:min(58vw,800px);height:min(80vh,820px);filter:drop-shadow(0 36px 30px rgba(54,43,33,.16));pointer-events:auto;transform:rotate(var(--lotus-roll,0deg));transition:filter .5s ease}
-.lotus-webgl{position:relative;width:100%;height:100%;background:transparent;cursor:grab;touch-action:pan-y}
-.lotus-webgl:active{cursor:grabbing}.lotus-webgl canvas{display:block;width:100%;height:100%;background:transparent}
-.lotus-loader{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#756b61;transition:opacity .35s ease}.lotus-webgl.is-loaded .lotus-loader{opacity:0;pointer-events:none}
+.depth-model-shell model-viewer{display:block;width:100%;height:100%;--poster-color:transparent;background:transparent;cursor:grab;touch-action:pan-y}
+.depth-model-shell model-viewer:active{cursor:grabbing}
 .depth-copy{position:absolute;z-index:7;left:5vw;bottom:7vh;width:min(390px,36vw);opacity:var(--lotus-copy,0);transform:translateY(calc((1 - var(--lotus-copy,0))*28px));pointer-events:auto}
 .depth-copy h2{font-family:"Cormorant Garamond",serif;font-size:clamp(50px,5.6vw,88px);font-weight:400;letter-spacing:-.055em;line-height:.78;margin:13px 0 20px}.depth-copy h2 em{font-weight:400;color:#8b7765}.depth-copy p{max-width:34ch;font-size:12px;line-height:1.75;color:#625950}.depth-collection-link{display:inline-block;margin-top:20px;padding-bottom:5px;border-bottom:1px solid rgba(36,31,26,.32);font-size:9px;letter-spacing:.18em;text-transform:uppercase}
 .depth-index{position:absolute;z-index:6;top:8.5vh;font-size:8px;line-height:1.55;letter-spacing:.2em;color:#655d54}.depth-index-left{left:5vw}.depth-index-right{right:5vw;text-align:right}
