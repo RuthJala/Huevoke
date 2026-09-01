@@ -1,2 +1,50 @@
-(() => {const $=s=>document.querySelector(s),money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);let cart=JSON.parse(localStorage.getItem("huevoke-cart")||"[]");const save=()=>{localStorage.setItem("huevoke-cart",JSON.stringify(cart));render();window.dispatchEvent(new Event("huevoke-cart-updated"))};function render(){const list=$("#cart-items");if(!cart.length){list.innerHTML='<div class="empty-cart"><h2>Your cart is empty.</h2><p>Explore the collections and select an object for your space.</p><a class="btn" href="collections.html">View collections</a></div>';$("#checkout-link").style.pointerEvents="none";$("#checkout-link").style.opacity=".4"}else{list.innerHTML=cart.map((x,i)=>`<article class="cart-item"><img src="${x.image}" alt="${x.name}"><div><small>${x.code}</small><h2>${x.name}</h2><p>${x.size}</p><div class="qty"><button data-minus="${i}">−</button><span>${x.qty}</span><button data-plus="${i}">+</button></div></div><strong>${money(x.price*x.qty)}</strong><button class="cart-remove" data-remove="${i}">Remove</button></article>`).join("");list.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{const i=+b.dataset.minus;cart[i].qty=Math.max(1,cart[i].qty-1);save()});list.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{cart[+b.dataset.plus].qty++;save()});list.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);save()})}$("#cart-subtotal").textContent=money(cart.reduce((s,x)=>s+x.price*x.qty,0))}render()})();
+(() => {
+  const $=s=>document.querySelector(s);
+  const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
+  const catalog=window.HUEVOKE_PRODUCTS||[];
+  const norm=s=>String(s||"").toLowerCase().replace(/[×x]/g,"x").replace(/\s|"/g,"");
+  let cart=JSON.parse(localStorage.getItem("huevoke-cart")||"[]");
 
+  cart=cart.map(item=>{
+    const p=catalog.find(x=>x.slug===item.slug);
+    if(!p)return item;
+    const option=p.sizes.find(o=>norm(o.size)===norm(item.size));
+    return {
+      ...item,
+      name:p.name,
+      code:p.code,
+      image:p.imgs[0],
+      ...(option?{size:option.size,price:option.price,regularPrice:option.regularPrice}:{})
+    };
+  });
+  localStorage.setItem("huevoke-cart",JSON.stringify(cart));
+
+  const save=()=>{
+    localStorage.setItem("huevoke-cart",JSON.stringify(cart));
+    render();
+    window.dispatchEvent(new Event("huevoke-cart-updated"));
+  };
+
+  function render(){
+    const list=$("#cart-items");
+    if(!cart.length){
+      list.innerHTML='<div class="empty-cart"><h2>Your cart is empty.</h2><p>Explore the collections and select an object for your space.</p><a class="btn" href="collections.html">View collections</a></div>';
+      $("#checkout-link").style.pointerEvents="none";
+      $("#checkout-link").style.opacity=".4";
+    }else{
+      list.innerHTML=cart.map((x,i)=>`<article class="cart-item">
+        <img src="${x.image}" alt="${x.name}">
+        <div><small>${x.code}</small><h2>${x.name}</h2><p>${x.size}</p>
+          <div class="qty"><button data-minus="${i}">−</button><span>${x.qty}</span><button data-plus="${i}">+</button></div>
+        </div>
+        <strong>${money(x.price*x.qty)}${x.regularPrice>x.price?`<small style="display:block;font-weight:400;margin-top:5px"><del style="opacity:.45">${money(x.regularPrice*x.qty)}</del></small>`:""}</strong>
+        <button class="cart-remove" data-remove="${i}">Remove</button>
+      </article>`).join("");
+      list.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{const i=+b.dataset.minus;cart[i].qty=Math.max(1,cart[i].qty-1);save()});
+      list.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{cart[+b.dataset.plus].qty++;save()});
+      list.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);save()});
+    }
+    $("#cart-subtotal").textContent=money(cart.reduce((s,x)=>s+x.price*x.qty,0));
+  }
+  render();
+})();
