@@ -1,7 +1,9 @@
 (() => {
   const data=window.HUEVOKE_PRODUCTS||[];
   const qs=new URLSearchParams(location.search);
-  const p=data.find(x=>x.slug===(qs.get("slug")||"contour-flow-01"))||data[0];
+  const requestedSlug=qs.get("slug")||"contour-flow-01";
+  const resolvedSlug=requestedSlug==="lotus-bloom"?"lotus-bloom-01":requestedSlug;
+  const p=data.find(x=>x.slug===resolvedSlug)||data[0];
   const $=s=>document.querySelector(s);
   const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
   const discountPct=o=>o.regularPrice>o.price?Math.round((1-o.price/o.regularPrice)*100):0;
